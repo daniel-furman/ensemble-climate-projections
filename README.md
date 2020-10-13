@@ -1,7 +1,5 @@
 ## Ensemble Climate Projections 
 
-By Daniel Furman.
-
 ---
 
 All code and data required to reproduce analyses presented at the [SICB 2021 conference]() and [Supporting Information]().
