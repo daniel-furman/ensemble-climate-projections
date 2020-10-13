@@ -11,6 +11,9 @@ All code and data required to reproduce analyses presented at the [SICB 2021 con
 
 The programming outputs are available in the `Xant_notebook.ipynb` Jupyter file, where each python script is ran in a easy to follow order based on the workflow of our study. 
 
+* How can models of climate change effects on geographic distributions incorporate symbiotic species relationships? 
+* What is the best quantification of uncertainty for climate forecasts in Southwest deserts?
+
 ## Figures
 
 ---
