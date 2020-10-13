@@ -19,7 +19,7 @@ library(dismo)
 library(rgdal)
 library(DescTools)
 
-tag <- 'ssp245_2081-2100'
+tag <- 'ssp585_2061-2080'
 
 files <- list.files(path=paste('/Volumes/HardDrive/',tag, sep = ""), pattern='tif',
 full.names=TRUE ) 
