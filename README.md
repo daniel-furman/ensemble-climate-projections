@@ -1,4 +1,6 @@
-## Furman-and-Adolph-2020
+## Ensemble Climate Projections 
+
+By Daniel Furman.
 
 ---
 
