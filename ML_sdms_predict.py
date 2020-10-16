@@ -15,7 +15,7 @@ Created on Thu Oct 15 11:26:05 2020
 
 import numpy as np
 import pandas as pd
-import random
+
 from sklearn.metrics import confusion_matrix
 from matplotlib import pyplot as plt
 from matplotlib import style
@@ -59,7 +59,7 @@ warnings.filterwarnings("ignore")
 
 # create a dictionary of ML models, name -> (line format, classifier)
 # params set to those determined in ML_sdms_train.py
-# using load_model('pycaret-model')
+# by printing load_model('pycaret-model')
 
 
 CLASS_MAP = {
@@ -119,7 +119,7 @@ training_class = class_type
 validation_data = env_data_test
 validation_class = class_type_test
 
-frac_correct = np.zeros(len(CLASS_MAP))
+f_score = np.zeros(len(CLASS_MAP)+1)
 i = 0 #iterator
 
 # iterate over dictionary :
@@ -148,20 +148,53 @@ for name, (line_fmt, model) in CLASS_MAP.items():
               / len(validation_class))
     cnf_matrix_test = confusion_matrix(validation_class, predicted_class_type)
     print(cnf_matrix_test)
-    frac_correct[i] = np.sum(predicted_class_type ==
-                             validation_class)/len(validation_class)
-    i =+ (i + 1)
     print('The F1 validation score is : ', 
           f1_score(validation_class, predicted_class_type))
+    f_score[i] = f1_score(validation_class, predicted_class_type)
+    i =+ (i + 1)
 
 # annotate AUC Plot     
 plt.legend(loc="lower right", shadow = True) 
-plt.title('Comparing Classifiers')
+plt.title('Comparing Classifiers: Validation AUC')
 plt.plot([0, 1], [0, 1], 'k-', alpha = 0.3) #x=y line. Visual aid 
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate') 
 plt.savefig('images-xant/auc.png', dpi = 400)
-plt.show()
 
-#load_model('xant_blended') 
+
+# finally, print model validation statistics for blended model
+env_data1 = pd.read_csv(
+    '/Volumes/HardDrive/xvigilis-data-main/testbackg_corr.csv')
+env_data2 = pd.read_csv(
+    '/Volumes/HardDrive/xvigilis-data-main/testpres_corr.csv')
+env_data1.insert(0, 'pa', 0)
+env_data2.insert(0, 'pa', 1)
+env_data_test = pd.concat([env_data1, env_data2])
+env_data_test = env_data_test.drop(['Unnamed: 0'], axis=1)
+print('\n')
+blender = load_model('xant_blended')
+predictions = predict_model(blender, data = env_data_test)
+pred_blend = predictions['Label'].astype(str).astype(int)
+
+print('\n\nFraction correct validation ' + 'Blended model' +' :' , 
+      np.sum(pred_blend == validation_class)/len(validation_class))
+cnf_matrix_test = confusion_matrix(validation_class, pred_blend)
+print(cnf_matrix_test)
+
+print('The F1 validation score is : ', f1_score(
+    validation_class, pred_blend))
+
+f_score[5] = f1_score(validation_class, pred_blend)
+columns = ['RForest', 'XGBoost', 'Extra Trees', 'LGBM', 'MLP-net', 'Blended']
+f_score = pd.DataFrame(data = f_score.reshape(-1, len(f_score)),
+                       columns=columns)
+f_score = f_score.rename(index={0: "F-statistic :"})
+f_score = f_score.sort_values(by = "F-statistic :", axis = 1,
+                              ascending = False)
+
+
+
+
+
+
