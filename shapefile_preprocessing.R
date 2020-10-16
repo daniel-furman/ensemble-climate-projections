@@ -5,21 +5,18 @@
 # output: html_document
 # ---
   
- # This notebook computes - with the dismo species distribution library (RStudio only)
- # many future projections of the desert night lizard's distribution, across eight
- # general circulation models (GCMs) describing future climate (CMIP6). See
- # https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html. 
+# This notebook processes CMIP6 TIF files and saves them to file. 
+# They are then uploaded to GitHub : 
+# https://github.com/daniel-furman/xantusia-data
 
 ### Load Climate Files 
-
-#Bioclim has 19 variables- each file has 19 corresponding bands: 
 
 # Load packages
 library(dismo)
 library(rgdal)
 library(DescTools)
 
-tag <- 'ssp585_2061-2080'
+tag <- 'ssp585_2061-2080' #change to your own file path
 
 files <- list.files(path=paste('/Volumes/HardDrive/',tag, sep = ""), pattern='tif',
 full.names=TRUE ) 
@@ -37,8 +34,6 @@ files
 #  Now that everything is loaded into R, we  create rasters stacks and save them as
 # new tif files. These rasters are now all less than 1.5 mb, and can be uploaded
 # to GitHub as a result for collaboration and public storage. 
-
-
 
 # Initialize empty model vector
 BCC_stack_layers <- stack()
@@ -117,4 +112,3 @@ writeRaster(Miroc6, filename=paste('/Users/danielfurman/Desktop/work/Xantusia_Ha
                                    tag, '/Miroc6/', names(Miroc6), sep = ""), bylayer=TRUE,format="GTiff")
 writeRaster(MRI, filename=paste('/Users/danielfurman/Desktop/work/Xantusia_Harvey_Mudd/stacks/',
                                 tag, '/MRI/', names(MRI), sep = ""), bylayer=TRUE,format="GTiff")
-
