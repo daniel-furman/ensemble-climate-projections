@@ -5,7 +5,7 @@
 #' output: html_document
 #' ---
 #' 
-#' Script constructs rforest, extra trees, and lgbm models for 
+#' This R script constructs rforest, extra trees, and lgbm models for 
 #' species distribution spatial prediction (sdms).
 #' 
 #' For an introduction to sdms and dismo:
