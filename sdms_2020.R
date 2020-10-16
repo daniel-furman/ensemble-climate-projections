@@ -49,7 +49,7 @@ train_layers <- list.files(path=paste(path,'/xvigilis-data-main/train_tifs',
 train_layers
 
 predictors <- stack(train_layers)
-predictors <- predictors[[c(-1,-2,-3,-5,-8,-9,-12,-14,-15,-20,-22)]]
+predictors <- predictors[[c(-1,-2,-3,-5,-8,-9,-12,-14,-15,-20,-22)]] # remove correlates
 predictors
 
 mask <- raster(train_layers[1])
@@ -103,9 +103,9 @@ head(testpres)
 
 ## ------------------------------------------------------------------------
 
-envtrain_corr <- envtrain[,c(-2,-3,-4,-6,-9,-10,-13,-15,-16,-21,-23)] #remove correlates
-testpres_corr <- testpres[,c(-1,-2,-3,-5,-8,-9,-12,-14,-15,-20,-22)] #remove correlates
-testbackg_corr <- testbackg[,c(-1,-2,-3,-5,-8,-9,-12,-14,-15,-20,-22)] #remove correlates
+envtrain_corr <- envtrain #[,c(-2,-3,-4,-6,-9,-10,-13,-15,-16,-21,-23)] #removed correlates already
+testpres_corr <- testpres #[,c(-1,-2,-3,-5,-8,-9,-12,-14,-15,-20,-22)] #removed correlates already
+testbackg_corr <- testbackg 
 testbackg_corr
 names(envtrain_corr) ##  [1] "pa"        "bclim12"   "bclim14"   "bclim15"   "bclim18"  
 ##  [6] "bclim19"   "bclim3"    "bclim6"    "bclim7"    "bclim8"   
