@@ -2,7 +2,7 @@
 
 ---
 
-All code and data required to reproduce analyses presented at the SICB 2021 conference and SCCUR 2019 conference, as well as the Supporting Information.
+All code and data required to reproduce analyses presented at the SICB 2021 conference and SCCUR 2019 conference, as well as Supporting Information.
 
 * How can models of climate change effects on geographic distributions incorporate symbiotic species relationships? 
 * What is the best quantification of uncertainty for climate forecasts in Southwest deserts?
@@ -25,5 +25,4 @@ Figures: To be filled
 ## Data
 
 ---
-
-All data 
+Data is housed in its own [GitHub repository](https://github.com/daniel-furman/xantusia-data). Climate data obtained from [Worldclim version 2](https://www.worldclim.org/) and presence data from GBIF. Future climate forecasts obtained from [CMIP6](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html), while the train_tifs represent near current conditions, averaged from 1970-2000. The raster data are on a 2.5x2.5 minutes grid and have the following extent: 
