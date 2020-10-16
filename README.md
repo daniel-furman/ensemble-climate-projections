@@ -11,7 +11,7 @@ All code and data required to reproduce analyses presented at the SICB 2021 conf
 
 ---
 
-The programming workflow follows the path `CMIP6_preprocessing.py` -> `shapefile_preprocessing.R` -> `ML_sdms_train.py` -> `ML_sdms_predict.py ` -> `sdms_2020.R`. The two ML_ files perform model selection with PyCaret and sk-learn, analyzed in `Comparing_MLs.ipynb`. Geospatial predictions with the resulting models are then performed in `sdms_2020.R`. The two pre-processing files efficiently piped climate data into the GitHub repository linked below - which should be cloned to re-run the workflow (<1 gb).
+The programming workflow chronologically followed `CMIP6_preprocessing.py` -> `shapefile_preprocessing.R` -> `ML_sdms_train.py` -> `ML_sdms_predict.py ` -> `sdms_2020.R`. The two `ML_.py` files perform model selection with PyCaret and sk-learn, with results printed and further analyzed in `Comparing_MLs.ipynb`. Geospatial predictions with the best resulting models was then performed in `sdms_2020.R`. The two pre-processing files efficiently piped climate data into the GitHub repository linked below - which should be cloned to re-run the workflow (<1 gb).
 
 
 ## Figures from SICB 2021
