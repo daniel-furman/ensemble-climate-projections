@@ -2,7 +2,7 @@
 
 ---
 
-All code and data required to reproduce analyses presented at the [SICB 2021 conference]() and [SCCUR 2019 conference](), as well as the [Supporting Information]().
+All code and data required to reproduce analyses presented at the SICB 2021 conference and SCCUR 2019 conference, as well as the Supporting Information.
 
 
 ## Workflow
