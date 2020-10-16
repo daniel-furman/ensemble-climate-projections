@@ -25,6 +25,7 @@ from pycaret.classification import *
 import sklearn.ensemble as ensemble
 from lightgbm import LGBMClassifier
 from xgboost import XGBClassifier
+from catboost import CatBoostClassifier
 
 env_data = pd.read_csv(
     '/Volumes/HardDrive/xvigilis-data-main/envtrain_corr.csv')
@@ -108,8 +109,9 @@ CLASS_MAP = {
                                 reg_lambda=0.0, silent=True, subsample=1.0,
                                 subsample_for_bin=200000, subsample_freq=0)),
 
-'MLP neural-net':('--', MLPClassifier(solver='adam'))
+'Catboost':('-.', CatBoostClassifier(logging_level='Silent')),
 
+'MLP neural-net':('--', MLPClassifier(solver='adam'))
     }
 
 
@@ -132,7 +134,6 @@ for name, (line_fmt, model) in CLASS_MAP.items():
     result = model.fit(training_data, training_class)
     # array w one col per label}|
     preds = model.predict_proba(validation_data)
-    
     pred = pd.Series(preds[:,1])
     fpr, tpr, thresholds = roc_curve(validation_class, pred)
     auc_score = auc(fpr, tpr)
@@ -185,8 +186,11 @@ print(cnf_matrix_test)
 print('The F1 validation score is : ', f1_score(
     validation_class, pred_blend))
 
-f_score[5] = f1_score(validation_class, pred_blend)
-columns = ['RForest', 'XGBoost', 'Extra Trees', 'LGBM', 'MLP-net', 'Blended']
+# create pandas dataframe with F statistic scores
+
+f_score[6] = f1_score(validation_class, pred_blend)
+columns = ['RForest', 'XGBoost', 'Extra Trees', 'LGBM', 'Catboost',
+           'MLP-net', 'Blended']
 f_score = pd.DataFrame(data = f_score.reshape(-1, len(f_score)),
                        columns=columns)
 f_score = f_score.rename(index={0: "F-statistic :"})
