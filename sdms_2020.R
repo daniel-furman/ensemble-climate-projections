@@ -22,7 +22,7 @@ library(maptools)
 library(randomForest)
 library(lightgbm)
 library(extraTrees)
-
+library(catboost)
 ## ------------------------------------------------------------------------
 
 #' First clone the following data repository : 
@@ -103,8 +103,8 @@ head(testpres)
 
 ## ------------------------------------------------------------------------
 
-envtrain_corr <- envtrain #[,c(-2,-3,-4,-6,-9,-10,-13,-15,-16,-21,-23)] #removed correlates already
-testpres_corr <- testpres #[,c(-1,-2,-3,-5,-8,-9,-12,-14,-15,-20,-22)] #removed correlates already
+envtrain_corr <- envtrain 
+testpres_corr <- testpres 
 testbackg_corr <- testbackg 
 testbackg_corr
 names(envtrain_corr) ##  [1] "pa"        "bclim12"   "bclim14"   "bclim15"   "bclim18"  
@@ -114,8 +114,6 @@ names(envtrain_corr) ##  [1] "pa"        "bclim12"   "bclim14"   "bclim15"   "bc
 write.csv(envtrain_corr, file ='envtrain_corr.csv')
 write.csv(testpres_corr, file ='testpres_corr.csv')
 write.csv(testbackg_corr, file ='testbackg_corr.csv')
-
-
 
 #' 
 ## ------------------------------------------------------------------------
@@ -137,9 +135,9 @@ points(bg2, col='red', pch = 1,cex=.4)
 
 model_corr <- factor(pa) ~
   bclim3   + bclim6 + bclim7 + bclim8 + bclim9   + bclim12  + bclim14 + bclim15 + bclim18 + bclim19
-rf_binary <- tuneRF(envtrain_corr[,2:11], factor(envtrain_corr$pa), ntreeTry = 100, doBest = TRUE)
+rf <- tuneRF(envtrain_corr[,2:11], factor(envtrain_corr$pa), ntreeTry = 100, doBest = TRUE)
 
-val.pred <- predict(rf_binary, rbind(testpres_corr,testbackg_corr))
+val.pred <- predict(rf, rbind(testpres_corr,testbackg_corr))
 tab <- table(observed =  pb_test, predicted = val.pred)
 
 tab # validation confusion matrix
@@ -149,7 +147,7 @@ print(tab[1,2]/(tab[1,1]+tab[1,2]))
 print('class 1 error rforest:') 
 print(tab[2,1]/(tab[2,1]+tab[2,2]))
 
-# fit LGBM
+# fit LGBM - doesn't work with dismo package
 
 dtrain <- lgb.Dataset(
    data = as.matrix(envtrain_corr[,2:11])
@@ -161,13 +159,12 @@ bst <- lightgbm(
 pred <- predict(bst, as.matrix(rbind(testpres_corr,testbackg_corr)))
 err <- mean(as.numeric(pred > 0.5) != pb_test)
 print(paste("test-error lgbm=", err))
-# pbst1<- predict(predictors, bst, ext=ext) #current #doesn't work with bst
 
 # fit etrees
 
-etrees_binary <- extraTrees(envtrain_corr[,2:11], factor(envtrain_corr$pa))
+etrees <- extraTrees(envtrain_corr[,2:11], factor(envtrain_corr$pa))
 
-val.pred <- predict(etrees_binary, rbind(testpres_corr,testbackg_corr))
+val.pred <- predict(etrees, rbind(testpres_corr,testbackg_corr))
 tab <- table(observed =  pb_test, predicted = val.pred)
 
 tab # validation confusion matrix
@@ -177,12 +174,22 @@ print(tab[1,2]/(tab[1,1]+tab[1,2]))
 print('class 1 error etrees:') 
 print(tab[2,1]/(tab[2,1]+tab[2,2]))
 
+# fit catboost - doesn't work with dismo package
+
+train_pool <- catboost.load_pool(data = envtrain_corr[,2:11],
+                                 label = (envtrain_corr$pa))
+catboost <- catboost.train(train_pool, params = list(logging_level = 'Silent'))
+real_pool <- catboost.load_pool(as.matrix(rbind(testpres_corr,testbackg_corr)))
+prediction <- catboost.predict(catboost, real_pool)
+err <- mean(as.numeric(prediction > 0.5) != pb_test)
+print(paste("test-error catboost=", err))
+
 ## ------------------------------------------------------------------------
 
 ext <- extent(-125.0208, -92.00083, 20, 46.9975) #set extent
 
-prf1<- predict(predictors, rf_binary, ext=ext) #current random forest
-petrees1<- predict(predictors, etrees_binary, ext=ext) #current extra trees
+prf1<- predict(predictors, rf, ext=ext) #current random forest
+petrees1<- predict(predictors, etrees, ext=ext) #current extra trees
 
 #png(filename = '/Users/danielfurman/Desktop/work/Xantusia_Harvey_Mudd/rf_current_setseed100.png',
     #pointsize=5, width=2800, height=2000, res=800)
