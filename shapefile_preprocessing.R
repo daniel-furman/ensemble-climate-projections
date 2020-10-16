@@ -5,7 +5,7 @@
 # output: html_document
 # ---
   
-# This notebook processes CMIP6 TIF files and saves them to file. 
+# This R script processes CMIP6 TIF files and saves them to file. 
 # They are then uploaded to GitHub : 
 # https://github.com/daniel-furman/xantusia-data
 
