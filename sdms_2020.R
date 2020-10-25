@@ -5,11 +5,12 @@
 #' output: html_document
 #' ---
 #' 
-#' This R script constructs rforest, extra trees, catboost,
-#' ada boost, and lgbm models for species distribution
-#' prediction (sdms) with the dismo package. 
+#' This R script constructs ML models for species distribution
+#' prediction (sdms) with the dismo package. Models were 
+#' first analyzed with PyCaret in Python, using identical
+#' training and validation data. 
 #' 
-#' For an introduction to sdms in R:
+#' For an introduction to spatial sdms for ecology in R:
 #' https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf
 #' 
 #' 
@@ -30,15 +31,14 @@ library(catboost)
 #' https://github.com/daniel-furman/xvigilis-data-projections
 #' 
 #' I have unzipped its contents at:
-
 path <- '/Users/danielfurman/Data_science_code/xantusia-data-main/'
 # change to your own path
 
-set.seed(100) #we decided this seed using random number generator
+set.seed(100) # seed using random number generator
 
 xant <- read.csv(paste(path, 'xant_complete.csv', 
                       sep = ""),header = TRUE)
-xantusia_unique <- unique(xant) #xantusia without duplicates
+xantusia_unique <- unique(xant) # xantusia without duplicates
 xantusia_unique <- xantusia_unique[complete.cases(xantusia_unique),] 
 e <- extent(min(xantusia_unique$longitude),max(xantusia_unique$longitude),min(
   xantusia_unique$latitude),max(xantusia_unique$latitude))
@@ -71,35 +71,35 @@ colnames(bg2) <- c('lon','lat')
 presvals <- extract(predictors, xantusia_unique)
 absvals <- extract(predictors, bg2)
 
-group <- kfold(xantusia_unique, 5) #divide whole dataset into 5 groups
-pres_train <- xantusia_unique[group != 1, ] #make a train set of 80 percent
-pres_test <- xantusia_unique[group == 1, ] #make a test set of 20 percent
+group <- kfold(xantusia_unique, 5) # divide whole dataset into 5 groups
+pres_train <- xantusia_unique[group != 1, ] # make a train set of 80 percent
+pres_test <- xantusia_unique[group == 1, ] # make a test set of 20 percent
 
 ## ------------------------------------------------------------------------
 
-group <- kfold(bg2, 5) #make background set of 
-backg_train <- bg2[group != 1, ] #make back train
-backg_test <- bg2[group == 1, ] #make back test
+group <- kfold(bg2, 5) # make background set of 
+backg_train <- bg2[group != 1, ] # make back train
+backg_test <- bg2[group == 1, ] # make back test
 
-colnames(pres_train) <- c('lon','lat') #make colnames the same
-colnames(backg_train) <- c('lon','lat') #make colnames the same
+colnames(pres_train) <- c('lon','lat') # make colnames the same
+colnames(backg_train) <- c('lon','lat') # make colnames the same
 
-train <- rbind(pres_train, backg_train) #training back and pres binded
+train <- rbind(pres_train, backg_train) # training back and pres binded
 
-pb_train <- c(rep(1, nrow(pres_train)), rep(0, nrow(backg_train))) #col of ones and zeros
+pb_train <- c(rep(1, nrow(pres_train)), rep(0, nrow(backg_train))) # col of ones and zeros
 
-envtrain <- extract(predictors, train) #extract raster values for training
-envtrain <- data.frame(cbind(pa=pb_train, envtrain) ) #bind 
+envtrain <- extract(predictors, train) # extract raster values for training
+envtrain <- data.frame(cbind(pa=pb_train, envtrain) ) # bind 
 
-testpres <- data.frame(extract(predictors, pres_test) ) #make test pres
+testpres <- data.frame(extract(predictors, pres_test) ) # make test pres
 testbackg <- data.frame(extract(predictors, backg_test) )
 
-testpres <- testpres[complete.cases(testpres),] #remove any nas
+testpres <- testpres[complete.cases(testpres),] # remove any nas
 testbackg <- testbackg[complete.cases(testbackg),]
 envtrain <- envtrain[complete.cases(envtrain),] 
 
 test <- rbind(testpres, testbackg)
-pb_test <- c(rep(1, nrow(testpres)), rep(0, nrow(testbackg))) #col of ones and zeros
+pb_test <- c(rep(1, nrow(testpres)), rep(0, nrow(testbackg))) # col of ones and zeros
 
 ## ------------------------------------------------------------------------
 
@@ -140,7 +140,7 @@ points(bg2, col='red', pch = 1,cex=.4)
 ## ------------------------------------------------------------------------
 
 # fit Rforest
-#IMPORT HYPERPARAMS FROM PYCARET
+
 model_corr <- factor(pa) ~
   bclim3   + bclim6 + bclim7 + bclim8 + bclim9   + bclim12  + bclim14 + bclim15 + bclim18 + bclim19
 rf <- tuneRF(envtrain_corr[,2:11], factor(envtrain_corr$pa), ntreeTry = 100, doBest = TRUE)
@@ -170,7 +170,6 @@ print(paste("test-error lgbm=", err))
 
 # fit etrees
 
-# IMPORT HYPERPARAMS FROM PYCARET
 etrees <- extraTrees(envtrain_corr[,2:11], factor(envtrain_corr$pa))
 
 val.pred <- predict(etrees, rbind(testpres_corr,testbackg_corr))
@@ -195,10 +194,10 @@ print(paste("test-error catboost=", err))
 
 ## ------------------------------------------------------------------------
 
-ext <- extent(-125.0208, -92.00083, 20, 46.9975) #set extent
+ext <- extent(-125.0208, -92.00083, 20, 46.9975) # set extent
 
-prf1<- predict(predictors, rf, ext=ext) #current random forest
-petrees1<- predict(predictors, etrees, ext=ext) #current extra trees
+prf1<- predict(predictors, rf, ext=ext) # current random forest
+petrees1<- predict(predictors, etrees, ext=ext) # current extra trees
 
 #png(filename = '/Users/danielfurman/Desktop/work/Xantusia_Harvey_Mudd/rf_current_setseed100.png',
     #pointsize=5, width=2800, height=2000, res=800)
@@ -224,13 +223,13 @@ prediction <- petrees1 + prf1
 prediction <- calc(prediction, fun=function(x){ x[x < 2] <- NA; return(x)} )
 prediction <- calc(prediction, fun=function(x){ x[x == 2] <- 1; return(x)} )
 
-#png(filename = '/Users/danielfurman/Desktop/work/Xantusia_Harvey_Mudd/etrees_rforest.png',
-#pointsize=5, width=2800, height=2000, res=800)
+# png(filename = '/Users/danielfurman/Desktop/work/Xantusia_Harvey_Mudd/etrees_rforest.png',
+# pointsize=5, width=2800, height=2000, res=800)
 plot(prediction, main='etrees and rforest', col = 'blue')
 points(bg2, col='red', pch = 16,cex=.2)
 points(xantusia_unique, col='black', pch = 16,cex=.2)
 plot(wrld_simpl, add=TRUE, border='dark grey')
-#dev.off()
+# dev.off()
 
 crs(prediction) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 
