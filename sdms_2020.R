@@ -31,12 +31,12 @@ library(catboost)
 #' https://github.com/daniel-furman/xvigilis-data-projections
 #' 
 #' I have unzipped its contents at:
-path <- '/Users/danielfurman/Data_science_code/xantusia-data-main/'
+path <- '/Users/danielfurman/Data_science_code/'
 # change to your own path
 
 set.seed(100) # seed using random number generator
 
-xant <- read.csv(paste(path, 'xant_complete.csv', 
+xant <- read.csv(paste(path, 'xantusia-data-main/xant_complete.csv', 
                       sep = ""),header = TRUE)
 xantusia_unique <- unique(xant) # xantusia without duplicates
 xantusia_unique <- xantusia_unique[complete.cases(xantusia_unique),] 
@@ -46,7 +46,7 @@ length_presences <- length(xantusia_unique[,1])
 
 ## ------------------------------------------------------------------------
 
-train_layers <- list.files(path=paste(path,'train_tifs',
+train_layers <- list.files(path=paste(path,'xantusia-data-main/train_tifs',
                                       sep = ""), pattern='asc', full.names=TRUE)
 train_layers
 
