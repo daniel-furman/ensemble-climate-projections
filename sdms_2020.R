@@ -6,9 +6,7 @@
 #' ---
 #' 
 #' This R script constructs ML models for species distribution
-#' prediction (sdms) with the dismo package. Models were 
-#' first analyzed with PyCaret in Python, using identical
-#' training and validation data. 
+#' prediction (sdms) with the dismo package. 
 #' 
 #' For an introduction to spatial sdms for ecology in R:
 #' https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf
@@ -142,7 +140,8 @@ points(bg2, col='red', pch = 1,cex=.4)
 # fit Rforest
 
 model_corr <- factor(pa) ~
-  bclim3   + bclim6 + bclim7 + bclim8 + bclim9   + bclim12  + bclim14 + bclim15 + bclim18 + bclim19
+  bclim3 + bclim6 + bclim7 + bclim8 + bclim9   + bclim12  + bclim14 + bclim15 + bclim18 + bclim19
+
 rf <- tuneRF(envtrain_corr[,2:11], factor(envtrain_corr$pa), ntreeTry = 100, doBest = TRUE)
 
 val.pred <- predict(rf, rbind(testpres_corr,testbackg_corr))
