@@ -5,10 +5,11 @@
 #' output: html_document
 #' ---
 #' 
-#' This R script constructs rforest, extra trees, and lgbm models for 
-#' species distribution spatial prediction (sdms).
+#' This R script constructs rforest, extra trees, catboost,
+#' ada boost, and lgbm models for species distribution
+#' prediction (sdms) with the dismo package. 
 #' 
-#' For an introduction to sdms and dismo:
+#' For an introduction to sdms in R:
 #' https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf
 #' 
 #' 
@@ -28,13 +29,14 @@ library(catboost)
 #' First clone the following data repository : 
 #' https://github.com/daniel-furman/xvigilis-data-projections
 #' 
-#' I have unzipped its contents at '/Volumes/HardDrive/'
+#' I have unzipped its contents at:
 
-path <- '/Volumes/HardDrive/' # change to your own path
+path <- '/Users/danielfurman/Data_science_code/xantusia-data-main/'
+# change to your own path
 
 set.seed(100) #we decided this seed using random number generator
 
-xant <- read.csv(paste(path, 'xvigilis-data-main/xant_complete.csv', 
+xant <- read.csv(paste(path, 'xant_complete.csv', 
                       sep = ""),header = TRUE)
 xantusia_unique <- unique(xant) #xantusia without duplicates
 xantusia_unique <- xantusia_unique[complete.cases(xantusia_unique),] 
@@ -44,12 +46,16 @@ length_presences <- length(xantusia_unique[,1])
 
 ## ------------------------------------------------------------------------
 
-train_layers <- list.files(path=paste(path,'/xvigilis-data-main/train_tifs',
+train_layers <- list.files(path=paste(path,'train_tifs',
                                       sep = ""), pattern='asc', full.names=TRUE)
 train_layers
 
 predictors <- stack(train_layers)
-predictors <- predictors[[c(-1,-2,-3,-5,-8,-9,-12,-14,-15,-20,-22)]] # remove correlates
+
+names(predictors) <- c("bclim12",  "bclim14"  , "bclim15" ,  "bclim18",
+ "bclim19"  , "bclim3"  ,  "bclim6"  ,  "bclim7"   , "bclim8",   
+ "bclim9")
+
 predictors
 
 mask <- raster(train_layers[1])
@@ -61,7 +67,7 @@ bg2 <- randomPoints(mask, length_presences*3, ext=e, extf = 4)
 colnames(bg2) <- c('lon','lat')
 
 # Extracting values from rasters
-#.rs.unloadPackage('tidyr')
+#.rs.unloadPackage('tidyr') #can mask certain functions
 presvals <- extract(predictors, xantusia_unique)
 absvals <- extract(predictors, bg2)
 
@@ -107,7 +113,9 @@ envtrain_corr <- envtrain
 testpres_corr <- testpres 
 testbackg_corr <- testbackg 
 testbackg_corr
-names(envtrain_corr) ##  [1] "pa"        "bclim12"   "bclim14"   "bclim15"   "bclim18"  
+names(envtrain_corr)
+
+##  [1] "pa"        "bclim12"   "bclim14"   "bclim15"   "bclim18"  
 ##  [6] "bclim19"   "bclim3"    "bclim6"    "bclim7"    "bclim8"   
 ## [11] "bclim9
 
@@ -132,7 +140,7 @@ points(bg2, col='red', pch = 1,cex=.4)
 ## ------------------------------------------------------------------------
 
 # fit Rforest
-
+#IMPORT HYPERPARAMS FROM PYCARET
 model_corr <- factor(pa) ~
   bclim3   + bclim6 + bclim7 + bclim8 + bclim9   + bclim12  + bclim14 + bclim15 + bclim18 + bclim19
 rf <- tuneRF(envtrain_corr[,2:11], factor(envtrain_corr$pa), ntreeTry = 100, doBest = TRUE)
@@ -162,6 +170,7 @@ print(paste("test-error lgbm=", err))
 
 # fit etrees
 
+# IMPORT HYPERPARAMS FROM PYCARET
 etrees <- extraTrees(envtrain_corr[,2:11], factor(envtrain_corr$pa))
 
 val.pred <- predict(etrees, rbind(testpres_corr,testbackg_corr))
