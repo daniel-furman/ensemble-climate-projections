@@ -25,7 +25,7 @@ Figures: To be filled
 ### Data
 
 ---
-Data is housed in its own [GitHub repository](https://github.com/daniel-furman/xantusia-data). Climate data obtained from [Worldclim version 2](https://www.worldclim.org/) and presence data from GBIF. Future climate forecasts obtained from [CMIP6](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html), while the train_tifs represent near current conditions, averaged from 1970-2000. The raster data are on a 2.5x2.5 minutes grid and have the following extent: (-125.0208, -92.00083, 20, 46.9975).
+All data required for the analyses is contained in a separate [GitHub repository](https://github.com/daniel-furman/xantusia-data). Climate data obtained from [Worldclim version 2](https://www.worldclim.org/) and presence data from GBIF. Future climate forecasts obtained from [CMIP6](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html), while the train_tifs represent near current conditions, averaged from 1970-2000. The raster data are on a 2.5x2.5 minutes grid and have the following extent: (-125.0208, -92.00083, 20, 46.9975).
 
 ### Abstract
 
