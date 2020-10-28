@@ -1,6 +1,6 @@
 ## Species Distribution Modeling: Ensemble Climate Projections for Southwestern Deserts
 
-*How can models of climate change effects on geographic distributions incorporate symbiotic species relationships? * What is the best quantification of uncertainty for climate forecasts in Southwest deserts?*
+*How can models of climate change effects on geographic distributions incorporate symbiotic species relationships? What is the best quantification of uncertainty for climate forecasts in Southwest deserts?*
 
 ---
 
