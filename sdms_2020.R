@@ -20,9 +20,8 @@ library(dismo)
 library(raster)
 library(maptools)
 library(randomForest)
-library(lightgbm)
 library(extraTrees)
-library(catboost)
+
 ## ------------------------------------------------------------------------
 
 #' First clone the following data repository : 
@@ -48,13 +47,15 @@ train_layers <- list.files(path=paste(path,'xantusia-data-main/train_tifs',
                                       sep = ""), pattern='asc', full.names=TRUE)
 train_layers
 
-predictors <- stack(train_layers)
+feature_names <- c("bclim12",  "bclim14"  , "bclim15" ,  "bclim18",
+  "bclim19"  , "bclim3"  ,  "bclim6"  ,  "bclim7"   , "bclim8",   
+  "bclim9")
 
-names(predictors) <- c("bclim12",  "bclim14"  , "bclim15" ,  "bclim18",
- "bclim19"  , "bclim3"  ,  "bclim6"  ,  "bclim7"   , "bclim8",   
- "bclim9")
+predictors <- stack(train_layers, layers = feature_names)
 
 predictors
+
+names(predictors)
 
 mask <- raster(train_layers[1])
 
@@ -145,27 +146,14 @@ model_corr <- factor(pa) ~
 rf <- tuneRF(envtrain_corr[,2:11], factor(envtrain_corr$pa), ntreeTry = 100, doBest = TRUE)
 
 val.pred <- predict(rf, rbind(testpres_corr,testbackg_corr))
-tab <- table(observed =  pb_test, predicted = val.pred)
 
+tab <- table(observed =  pb_test, predicted = val.pred)
 tab # validation confusion matrix
 
 print('class 0 error rforest:')
 print(tab[1,2]/(tab[1,1]+tab[1,2])) 
 print('class 1 error rforest:') 
 print(tab[2,1]/(tab[2,1]+tab[2,2]))
-
-# fit LGBM - doesn't work with dismo package
-
-dtrain <- lgb.Dataset(
-   data = as.matrix(envtrain_corr[,2:11])
-   , label = as.numeric(envtrain_corr$pa))
-dtrain <- lgb.Dataset.construct(dtrain)
-bst <- lightgbm(
-   data =  dtrain
-   , objective = "binary")
-pred <- predict(bst, as.matrix(rbind(testpres_corr,testbackg_corr)))
-err <- mean(as.numeric(pred > 0.5) != pb_test)
-print(paste("test-error lgbm=", err))
 
 # fit etrees
 
@@ -181,15 +169,6 @@ print(tab[1,2]/(tab[1,1]+tab[1,2]))
 print('class 1 error etrees:') 
 print(tab[2,1]/(tab[2,1]+tab[2,2]))
 
-# fit catboost - doesn't work with dismo package
-
-train_pool <- catboost.load_pool(data = envtrain_corr[,2:11],
-                                 label = (envtrain_corr$pa))
-catboost <- catboost.train(train_pool, params = list(logging_level = 'Silent'))
-real_pool <- catboost.load_pool(as.matrix(rbind(testpres_corr,testbackg_corr)))
-prediction <- catboost.predict(catboost, real_pool)
-err <- mean(as.numeric(prediction > 0.5) != pb_test)
-print(paste("test-error catboost=", err))
 
 ## ------------------------------------------------------------------------
 
@@ -238,3 +217,5 @@ print(cellStats(petrees1, function(i, ...) sum(!is.na(i))))
 print(cellStats(prf1, function(i, ...) sum(!is.na(i)))) 
 
 curr <- cellStats(prediction, function(i, ...) sum(!is.na(i)))
+
+
