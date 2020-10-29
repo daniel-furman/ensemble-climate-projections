@@ -11,7 +11,7 @@ All code and data required to reproduce our research analyses presented at the S
 
 ---
 
-The `ML_sdms_.py` scripts train and validate ML classifiers with PyCaret and SKLearn, output in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses. Predictions were also performed in RStudio with the traditional species distribution [dismo](https://cran.r-project.org/web/packages/dismo/index.html) package in `sdms_2020.R`. The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB). Lastly, `_main.py` edits deprecated code within the [pyimpute](https://pypi.org/project/pyimpute/) library, critical to performing the above geospatial predictions in Python, with the edits pending a pull request to the master branch.
+The `ML_sdms_.py` scripts train and validate ML classifiers with PyCaret and SKLearn, output in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses. Predictions were also performed in RStudio with the traditional species distribution dismo package in `sdms_2020.R`. The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB). Lastly, `_main.py` edits deprecated code within the pyimpute library, critical to performing geospatial predictions in Python, with the edits pending a pull request to the master branch.
 
 
 ### Figures from SICB 2021
