@@ -11,7 +11,7 @@ All code and data required to reproduce analyses presented at the SICB 2021 conf
 
 ---
 
-The programming workflow chronologically followed `CMIP6_preprocessing.py` -> `shapefile_preprocessing.R` -> `ML_sdms_train.py` -> `ML_sdms_predict.py ` -> `sdms_2020.R`. The two `ML_sdms_.py` files perform model selection with PyCaret and sk-learn, with results printed and further analyzed in `Comparing_MLs.ipynb`. Geospatial predictions with the best resulting models was then performed in `sdms_2020.R`. The two pre-processing files efficiently piped climate data into the GitHub repository linked below - which should be cloned to re-run the workflow (<1 GB).
+The programming workflow chronologically followed `CMIP6_preprocessing.py` -> `shapefile_preprocessing.R` -> `ML_sdms_train.py` -> `ML_sdms_predict.py ` -> `sdms_2020.R`. The `ML_sdms_.py` files performed model selection with PyCaret and SKLearn, output in `Comparing_MLs.ipynb` alongisde geospatial predictions with the most predictive models and future suitability analyses. Geospatial predictions were also performed in RStudio with the traditional species distribution [dismo](https://cran.r-project.org/web/packages/dismo/index.html) library in `sdms_2020.R`. The two pre-processing files (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-reunning the workflow (<1 GB). Lastly, `_main.py` edits deprecaded code within the [pyimpute](https://pypi.org/project/pyimpute/) library, pending a pull request to the master branch.
 
 
 ### Figures from SICB 2021
