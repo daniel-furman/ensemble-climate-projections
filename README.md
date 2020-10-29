@@ -4,7 +4,7 @@
 
 ---
 
-All code and data required to reproduce our research analyses presented at the SICB 2021 and SCCUR 2019 conferences, as well as our Supporting Information. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. 
+All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. 
 
 
 ### Workflow
