@@ -4,14 +4,14 @@
 
 ---
 
-All code and data required to reproduce analyses presented at the SICB 2021 conference and SCCUR 2019 conference, as well as Supporting Information. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. 
+All code and data required to reproduce our research analyses presented at the SICB 2021 and SCCUR 2019 conferences, as well as our Supporting Information. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. 
 
 
 ### Workflow
 
 ---
 
-The `ML_sdms_.py` files train and validate ML classifiers with PyCaret and SKLearn, output in `Comparing_MLs.ipynb` alongisde geospatial predictions with the most predictive models, as well as with ensemble future suitability analyses. Geospatial predictions were also performed in RStudio with the traditional species distribution [dismo](https://cran.r-project.org/web/packages/dismo/index.html) library in `sdms_2020.R`. The two pre-processing files (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-reunning the workflow (<1 GB). Lastly, `_main.py` edits deprecaded code within the [pyimpute](https://pypi.org/project/pyimpute/) library, critical to performing geospatial predictions in Python, pending a pull request to the master branch.
+The `ML_sdms_.py` files train and validate ML classifiers with PyCaret and SKLearn, output in `Comparing_MLs.ipynb` alongside geospatial predictions with the most predictive models, as well as with our ensemble future suitability analyses. Geospatial predictions were also performed in RStudio with the traditional species distribution [dismo](https://cran.r-project.org/web/packages/dismo/index.html) package in `sdms_2020.R`. The two pre-processing files (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB). Lastly, `_main.py` edits deprecated code within the [pyimpute](https://pypi.org/project/pyimpute/) library, critical to performing geospatial predictions in Python, pending a pull request to the master branch.
 
 
 ### Figures from SICB 2021
@@ -33,7 +33,7 @@ All data required for the analyses is contained in a separate [GitHub repository
 
 The desert night lizard (*Xantusia vigilis*) is a habitat specialist abundantly spread across arid regions of the North American southwest, often reliant on Joshua tree branches (*Yucca brevifolia*) for shelter. Future climate change impacts on *Y. brevifolia* are thus of particular concern for the *X.vigilis'* ecological conservation. 
 
-Here, we explored the impacts of climate change on their geographical distributions by classifying the species' climatic niches. We trained the Species Distribtion Models (SDMs) with a set of ten uncorrelated WorldClim Bioclimatic variables (1970-2000 averages) and presence locations of each species (>1000 unique locations). 
+Here, we explored the impacts of climate change on their geographical distributions by classifying the species' climatic niches. We trained the Species Distribution Models (SDMs) with a set of ten uncorrelated WorldClim Bioclimatic variables (1970-2000 averages) and presence locations of each species (>1000 unique locations). 
 
 A random forest classifier performed best from a set of over fifteen candidates (including Maxent), emerging as the most predictive model of the current geographic distribution (e.g., OOB misclassification error ~ 3%). We then projected the SDM to future climate conditions, simulated with eight climate models from CMIP6 over four Shared Socioeconomic Pathways, for the years 2040-2100. Under these scenarios, the range of *X. vigilis* was predicted to decline to between 11% to 55% of its current distribution, assuming little or no dispersal, overlapped with projections of *Y. brevifolias'* distribution. In addition, a single climate model, CanESM5, consistently predicted the direst scenario of future habitat suitability. 
 
