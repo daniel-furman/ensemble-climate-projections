@@ -28,14 +28,14 @@ from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
 
 env_data = pd.read_csv(
-    '/Volumes/HardDrive/xvigilis-data-main/envtrain_corr.csv')
+    '/Users/danielfurman/Data_science_code/xantusia-data-main/envtrain_corr.csv')
 class_type = env_data['pa']
 env_data.head()
 
 env_data1 = pd.read_csv(
-    '/Volumes/HardDrive/xvigilis-data-main/testbackg_corr.csv')
+    '/Users/danielfurman/Data_science_code/xantusia-data-main/testbackg_corr.csv')
 env_data2 = pd.read_csv(
-    '/Volumes/HardDrive/xvigilis-data-main/testpres_corr.csv')
+    '/Users/danielfurman/Data_science_code/xantusia-data-main/testpres_corr.csv')
 
 env_data1.insert(0, 'pa', 0)
 env_data2.insert(0, 'pa', 1)
@@ -166,9 +166,9 @@ plt.savefig('images-xant/auc.png', dpi = 400)
 
 # finally, print model validation statistics for blended model
 env_data1 = pd.read_csv(
-    '/Volumes/HardDrive/xvigilis-data-main/testbackg_corr.csv')
+    '/Users/danielfurman/Data_science_code/xantusia-data-main/testbackg_corr.csv')
 env_data2 = pd.read_csv(
-    '/Volumes/HardDrive/xvigilis-data-main/testpres_corr.csv')
+    '/Users/danielfurman/Data_science_code/xantusia-data-main/testpres_corr.csv')
 env_data1.insert(0, 'pa', 0)
 env_data2.insert(0, 'pa', 1)
 env_data_test = pd.concat([env_data1, env_data2])
