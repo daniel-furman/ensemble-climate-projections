@@ -22,21 +22,21 @@ from pycaret.classification import *
 data = pd.read_csv("/Users/danielfurman/Data_science_code/xantusia-data-main/xant-pycaret.csv")
 data = data.sample(frac=1)
 data = data.drop(['Unnamed: 0','Unnamed: 0.1'], axis = 1)
-exp_clf = setup(data, target = 'pa');
-compare_models();
+exp_clf = setup(data, target = 'pa')
+compare_models()
 
 
 # model statistics are the mean of 10-fold cross validation:
 
-etrees = create_model('et') #Accuracy = .9609, F1 = .9226, AUC = .9897
+etrees = create_model('et')
 
-xgboost = create_model('xgboost') #Accuracy = .9612, F1 = .9234, AUC = .9885
+xgboost = create_model('xgboost')
 
-catboost = create_model('catboost') #Accuracy = .9609, F1 = .9233, AUC = .9892
+catboost = create_model('catboost') 
 
-rf = create_model('rf') #Accuracy = .9626, F1 = .9258, AUC = .9904
+rf = create_model('rf') 
 
-lgbm = create_model('lightgbm') #Accuracy = .9593, F1 = .9202, AUC = .9895
+lgbm = create_model('lightgbm')
 
 # tuned_models were only included when performance is improved
 
