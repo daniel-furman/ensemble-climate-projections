@@ -23,7 +23,6 @@ data = pd.read_csv("/Users/danielfurman/Data_science_code/xantusia-data-main/xan
 data = data.sample(frac=1)
 data = data.drop(['Unnamed: 0','Unnamed: 0.1'], axis = 1)
 exp_clf = setup(data, target = 'pa')
-compare_models()
 
 # create models
 etrees = create_model('et')
