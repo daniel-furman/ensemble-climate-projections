@@ -41,7 +41,9 @@ Our results highlight the importance of including symbiotic and other ecological
 
 ### Requirements
 
-Python dependencies are listed in a `requirements-py.txt` file, including the library version numbers. You can replicate the environment your codebase needs by using virtualenv:
+---
+
+Python dependencies are listed in a `requirements-py.txt` file, including the library version numbers. You can replicate the environment your codebase needs by using *virtualenv*:
 
 ```
 # This creates the virtual environment
@@ -58,7 +60,7 @@ pip install -r requirements.txt
 # This activates the virtual environment
 source ensemble-climate-projections/bin/activate
 ```
-R dependencies are listed in a `requirements-R.txt` file, including the package version numbers. You can replicate the environment your codebase needs by using devtools::install_version:
+R dependencies are listed in a `requirements-R.txt` file, including the package version numbers. You can replicate the environment your codebase needs by using *devtools::install_version*:
 
 ```
 #!/usr/bin/bash
