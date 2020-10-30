@@ -60,11 +60,12 @@ pip install -r requirements-py.txt
 # This activates the virtual environment
 source ensemble-climate-projections/bin/activate
 ```
-R dependencies are listed in a `requirements-R.txt` file, including the package version numbers. You can replicate the environment your codebase needs by using devtools::install_version:
+R dependencies are listed in a `requirements-R.txt` file. You can replicate the environment your codebase needs by using install.packages():
 
 ```
-reqs <- read.table('PROJECT-PATH/requirements-R.txt', col.names = c('package', 'version'))
+reqs <- read.table('PROJECT-PATH/requirements-R.txt', col.names = c('package'))
 for (i in 1:length(reqs$package)){
-  devtools::install_version(reqs$package[i], version = reqs$version[i])
+  install.packages(reqs$package[i])
   }
+  
 ```
