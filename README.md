@@ -12,15 +12,6 @@ All code and data required to reproduce research presented at the SICB 2021 and 
 
 The `ML_sdms_.py` scripts train and validate ML classifiers with PyCaret and SKLearn, output in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses. Predictions were also performed in RStudio with the traditional species distribution dismo package in `sdms_2020.R`. The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB). Lastly, `_main.py` edits deprecated code within the pyimpute library, critical to performing geospatial predictions in Python, with the edits pending a pull request to the master branch.
 
-
-### Poster Figures (SICB 2021)
-
----
-
-Figures: To be filled closer to conference date. 
-
----
-
 ### Data
 
 ---
@@ -66,3 +57,11 @@ for (i in 1:length(reqs$package)){
   install.packages(reqs$package[i]) # devtools::install_version if versions desired
   }
 ```
+
+### Poster Figures (SICB 2021)
+
+---
+
+Figures: To be filled closer to conference date. 
+
+---
