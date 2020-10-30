@@ -64,50 +64,43 @@ warnings.filterwarnings("ignore")
 
 
 CLASS_MAP = {
-'Random Forest':('-', ensemble.RandomForestClassifier(bootstrap=False, ccp_alpha=0.0,
-                                        class_weight=None, criterion='entropy',
-                                        max_depth=60, max_features='log2',
-                                        max_leaf_nodes=None, max_samples=None,
-                                        min_impurity_decrease=0.0,
-                                        min_impurity_split=None,
-                                        min_samples_leaf=1, min_samples_split=9,
-                                        min_weight_fraction_leaf=0.0,
-                                        n_estimators=40, n_jobs=-1,
-                                        oob_score=False, random_state=8143,
-                                        verbose=0, warm_start=False)),
+'Random Forest':('-', ensemble.RandomForestClassifier(bootstrap=True, ccp_alpha=0.0,
+                                                      class_weight=None,
+                       criterion='gini', max_depth=None, max_features='auto',
+                       max_leaf_nodes=None, max_samples=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, n_estimators=100,
+                       n_jobs=-1, oob_score=False, random_state=5124, verbose=0,
+                       warm_start=False)),
 
 'XGBoost': ('-.', XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
               colsample_bynode=1, colsample_bytree=1, gamma=0, gpu_id=-1,
               importance_type='gain', interaction_constraints='',
               learning_rate=0.300000012, max_delta_step=0, max_depth=6,
-              min_child_weight=1, monotone_constraints='()',
+              min_child_weight=1, missing=np.nan, monotone_constraints='()',
               n_estimators=100, n_jobs=-1, num_parallel_tree=1,
-              objective='binary:logistic', random_state=6289, reg_alpha=0,
-              reg_lambda=1, scale_pos_weight=1, subsample=1,
-              tree_method='exact', validate_parameters=1, verbosity=0)),
+              objective='binary:logistic', random_state=5124, reg_alpha=0,
+              reg_lambda=1, scale_pos_weight=1, subsample=1, tree_method='auto',
+              validate_parameters=1, verbosity=0)),
 
 'Extra Trees':('--', ensemble.ExtraTreesClassifier(bootstrap=False, ccp_alpha=0.0,
-                                      class_weight=None, criterion='gini',
-                                      max_depth=None, max_features='auto',
-                                      max_leaf_nodes=None, max_samples=None,
-                                      min_impurity_decrease=0.0,
-                                      min_impurity_split=None,
-                                      min_samples_leaf=1, min_samples_split=2,
-                                      min_weight_fraction_leaf=0.0,
-                                      n_estimators=100, n_jobs=-1,
-                                      oob_score=False, random_state=8143,
-                                      verbose=0, warm_start=False)),
+                                                   class_weight=None,
+                     criterion='gini', max_depth=None, max_features='auto',
+                     max_leaf_nodes=None, max_samples=None,
+                     min_impurity_decrease=0.0, min_impurity_split=None,
+                     min_samples_leaf=1, min_samples_split=2,
+                     min_weight_fraction_leaf=0.0, n_estimators=100, n_jobs=-1,
+                     oob_score=False, random_state=5124, verbose=0,
+                     warm_start=False)),
 
-'LGBoost Machine':('-.', LGBMClassifier(boosting_type='gbdt',
-                                                     class_weight=None,
-                                colsample_bytree=1.0, importance_type='split',
-                                learning_rate=0.1, max_depth=-1,
-                                min_child_samples=20, min_child_weight=0.001,
-                                min_split_gain=0.0, n_estimators=100, n_jobs=-1,
-                                num_leaves=31, objective=None,
-                                random_state=8143, reg_alpha=0.0,
-                                reg_lambda=0.0, silent=True, subsample=1.0,
-                                subsample_for_bin=200000, subsample_freq=0)),
+'LGBoost Machine':('-.', LGBMClassifier(boosting_type='gbdt', class_weight=None,
+                                        colsample_bytree=1.0,
+               importance_type='split', learning_rate=0.1, max_depth=-1,
+               min_child_samples=20, min_child_weight=0.001, min_split_gain=0.0,
+               n_estimators=100, n_jobs=-1, num_leaves=31, objective=None,
+               random_state=5124, reg_alpha=0.0, reg_lambda=0.0, silent=True,
+               subsample=1.0, subsample_for_bin=200000, subsample_freq=0)),
 
 'Catboost':('-.', CatBoostClassifier(logging_level='Silent')),
 
@@ -161,7 +154,7 @@ plt.plot([0, 1], [0, 1], 'k-', alpha = 0.3) #x=y line. Visual aid
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate') 
-plt.savefig('images-xant/auc.png', dpi = 400)
+plt.savefig('auc.png', dpi = 400)
 
 
 # finally, print model validation statistics for blended model

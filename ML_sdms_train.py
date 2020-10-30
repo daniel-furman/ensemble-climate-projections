@@ -22,23 +22,19 @@ from pycaret.classification import *
 data = pd.read_csv("/Users/danielfurman/Data_science_code/xantusia-data-main/xant-pycaret.csv")
 data = data.sample(frac=1)
 data = data.drop(['Unnamed: 0','Unnamed: 0.1'], axis = 1)
-exp_clf = setup(data, target = 'pa')
-compare_models()
+exp_clf = setup(data, target = 'pa');
+compare_models();
 
 
 # model statistics are the mean of 10-fold cross validation:
 
 etrees = create_model('et') #Accuracy = .9609, F1 = .9226, AUC = .9897
 
-xgboost = create_model('xgboost')
-tuned_xgboost = tune_model(
-    xgboost, n_iter = 40) #Accuracy = .9612, F1 = .9234, AUC = .9885
+xgboost = create_model('xgboost') #Accuracy = .9612, F1 = .9234, AUC = .9885
 
 catboost = create_model('catboost') #Accuracy = .9609, F1 = .9233, AUC = .9892
 
-rf = create_model('rf')
-tuned_rf = tune_model(
-    rf, n_iter = 40) #Accuracy = .9626, F1 = .9258, AUC = .9904
+rf = create_model('rf') #Accuracy = .9626, F1 = .9258, AUC = .9904
 
 lgbm = create_model('lightgbm') #Accuracy = .9593, F1 = .9202, AUC = .9895
 
@@ -49,7 +45,7 @@ finalize_model(etrees)
 save_model(etrees, 'xant_etrees')
 
 #print(tuned_xgboost)
-finalize_model(tuned_xgboost)
+finalize_model(xgboost)
 save_model(tuned_xgboost, 'xant_xgb')
 
 #print(catboost)
@@ -57,14 +53,14 @@ finalize_model(catboost)
 save_model(catboost, 'xant_cboost')
 
 #print(tuned_rf)
-finalize_model(tuned_rf)
+finalize_model(rf)
 save_model(tuned_rf, 'xant_rf')
 
 #print(lgbm)
 finalize_model(lgbm)
 save_model(lgbm, 'xant_lgbm')
 
-blender_specific = blend_models(estimator_list = [tuned_xgboost, tuned_rf],
+blender_specific = blend_models(estimator_list = [rf, lgbm],
                 method = 'soft')
 
 # print(blender_specific)
