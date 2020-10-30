@@ -49,11 +49,9 @@ Python dependencies are listed in a `requirements-py.txt` file, including the li
 # This creates the virtual environment
 cd $PROJECT-PATH
 virtualenv ensemble-climate-projections
-```
 
-and then install the dependencies by referring to the requirements-py.txt:
+# Then install the dependencies by referring to the requirements-py.txt:
 
-```
 # This installs the modules
 pip install -r requirements-py.txt
 
@@ -65,9 +63,6 @@ R dependencies are listed in a `requirements-R.txt` file. You can replicate the 
 ```
 reqs <- read.table('PROJECT-PATH/requirements-R.txt', col.names = c('package', 'version'))
 for (i in 1:length(reqs$package)){
-  install.packages(reqs$package[i])
+  install.packages(reqs$package[i]) # Use devtools::install_version for corresponding versions
   }
-  
-# alternatively, use devtools::install_version with the corresponding version
-  
 ```
