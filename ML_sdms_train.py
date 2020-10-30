@@ -19,7 +19,7 @@ from pycaret.utils import version
 version()
 from pycaret.classification import *
 
-data = pd.read_csv("/Volumes/HardDrive/xvigilis-data-main/xant-pycaret.csv")
+data = pd.read_csv("/Users/danielfurman/Data_science_code/xantusia-data-main/xant-pycaret.csv")
 data = data.sample(frac=1)
 data = data.drop(['Unnamed: 0','Unnamed: 0.1'], axis = 1)
 exp_clf = setup(data, target = 'pa')
@@ -64,9 +64,8 @@ save_model(tuned_rf, 'xant_rf')
 finalize_model(lgbm)
 save_model(lgbm, 'xant_lgbm')
 
-blender_specific = blend_models(estimator_list = [etrees, tuned_xgboost,
-                lgbm, catboost, tuned_rf],
-                method = 'soft') # Accuracy = .9620, F1 = .9249, AUC = .9911
+blender_specific = blend_models(estimator_list = [tuned_xgboost, tuned_rf],
+                method = 'soft')
 
 # print(blender_specific)
 finalize_model(blender_specific)
