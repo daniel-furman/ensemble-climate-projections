@@ -63,9 +63,11 @@ source ensemble-climate-projections/bin/activate
 R dependencies are listed in a `requirements-R.txt` file. You can replicate the environment your codebase needs by using install.packages():
 
 ```
-reqs <- read.table('PROJECT-PATH/requirements-R.txt', col.names = c('package'))
+reqs <- read.table('PROJECT-PATH/requirements-R.txt', col.names = c('package', 'version'))
 for (i in 1:length(reqs$package)){
   install.packages(reqs$package[i])
   }
+  
+# alternatively, use devtools::install_version with the corresponding version
   
 ```
