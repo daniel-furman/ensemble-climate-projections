@@ -111,7 +111,6 @@ head(testpres)
 envtrain_corr <- envtrain 
 testpres_corr <- testpres 
 testbackg_corr <- testbackg 
-testbackg_corr
 names(envtrain_corr)
 
 ##  [1] "pa"        "bclim12"   "bclim14"   "bclim15"   "bclim18"  
@@ -217,5 +216,4 @@ print(cellStats(petrees1, function(i, ...) sum(!is.na(i))))
 print(cellStats(prf1, function(i, ...) sum(!is.na(i)))) 
 
 curr <- cellStats(prediction, function(i, ...) sum(!is.na(i)))
-
 
