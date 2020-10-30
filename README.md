@@ -63,6 +63,6 @@ R dependencies are listed in a `requirements-R.txt` file. You can replicate the 
 ```
 reqs <- read.table('PROJECT-PATH/requirements-R.txt', col.names = c('package', 'version'))
 for (i in 1:length(reqs$package)){
-  install.packages(reqs$package[i]) # Use devtools::install_version for corresponding versions
+  install.packages(reqs$package[i]) # devtools::install_version if versions desired
   }
 ```
