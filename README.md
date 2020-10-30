@@ -4,8 +4,7 @@
 
 ---
 
-All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. 
-
+All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. See requirements/ for required packages and instructions to set up a conda virtual environment. 
 
 ### Workflow
 
