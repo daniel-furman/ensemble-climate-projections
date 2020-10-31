@@ -23,33 +23,6 @@ from sklearn.metrics import roc_curve, auc, f1_score
 from sklearn.neural_network import MLPClassifier
 from pycaret.classification import *
 
-env_data = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantusia-data-main/envtrain_corr.csv')
-class_type = env_data['pa']
-env_data.head()
-
-env_data1 = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantusia-data-main/testbackg_corr.csv')
-env_data2 = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantusia-data-main/testpres_corr.csv')
-
-env_data1.insert(0, 'pa', 0)
-env_data2.insert(0, 'pa', 1)
-
-env_data_test = pd.concat([env_data1, env_data2])
-
-class_type_test = env_data_test['pa']
-env_data = env_data.drop(['Unnamed: 0'], axis=1)
-env_data = env_data.drop(['pa'], axis=1)
-
-env_data_test = env_data_test.drop(['Unnamed: 0'], axis=1)
-env_data_test = env_data_test.drop(['pa'], axis=1)
-
-
-#print('head validation features (length = 1282):\n\n', env_data_test.head())
-#validation set, 20 percent of the data
-#print('\nhead training features (length = 5125):\n\n', env_data.head())
-#train set, 80 percent of the data
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -67,22 +40,36 @@ CLASS_MAP = {
 'MLP neural-net':('--', MLPClassifier(solver='adam'))
     }
 
+# load training (80%) and test (20%) sets
+
+env_data = pd.read_csv(
+    '/Users/danielfurman/Data_science_code/xantusia-data-main/envtrain_corr.csv')
+class_type = env_data['pa']
+env_data1 = pd.read_csv(
+    '/Users/danielfurman/Data_science_code/xantusia-data-main/testbackg_corr.csv')
+env_data2 = pd.read_csv(
+    '/Users/danielfurman/Data_science_code/xantusia-data-main/testpres_corr.csv')
+env_data1.insert(0, 'pa', 0)
+env_data2.insert(0, 'pa', 1)
+env_data_test = pd.concat([env_data1, env_data2])
+class_type_test = env_data_test['pa']
+env_data = env_data.drop(['Unnamed: 0'], axis=1)
+env_data = env_data.drop(['pa'], axis=1)
+env_data_test = env_data_test.drop(['Unnamed: 0'], axis=1)
+env_data_test = env_data_test.drop(['pa'], axis=1)
 training_data = env_data
 training_class = class_type
-
 validation_data = env_data_test
 validation_class = class_type_test
 
+# perform validation set analyses, iterate over dictionary :
+
 f_score = np.zeros(len(CLASS_MAP))
 i = 0 #iterator
-
-# iterate over dictionary :
 style.use('default')
 plt.rcParams["figure.figsize"] = (6,4)
 
-
 for name, (line_fmt, model) in CLASS_MAP.items():
-
     result = model.fit(training_data, training_class)
     # array w one col per label}|
     preds = model.predict_proba(validation_data)
@@ -92,8 +79,6 @@ for name, (line_fmt, model) in CLASS_MAP.items():
     label='%s: auc=%.4f' % (name, auc_score)
     plt.plot(fpr, tpr, line_fmt,
         linewidth=2, label=label)
-
-
     #compute confusion matrix and F1 stat    
     predicted_class_type = model.predict(validation_data)
     print('\n\nFraction correct validation ' + name +' :' ,
@@ -116,7 +101,6 @@ plt.ylabel('True Positive Rate')
 plt.savefig('auc.png', dpi = 400)
 
 # create pandas dataframe with F statistic scores
-
 columns = ['RForest', 'XGBoost', 'Extra Trees', 'LGBM', 'Blended', 'Catboost',
            'MLP-net']
 f_score = pd.DataFrame(data = f_score.reshape(-1, len(f_score)),
