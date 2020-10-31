@@ -36,13 +36,13 @@ finalize_model(etrees)
 save_model(etrees, 'xant_etrees')
 
 finalize_model(xgboost)
-save_model(tuned_xgboost, 'xant_xgb')
+save_model(xgboost, 'xant_xgb')
 
 finalize_model(catboost)
 save_model(catboost, 'xant_cboost')
 
 finalize_model(rf)
-save_model(tuned_rf, 'xant_rf')
+save_model(rf, 'xant_rf')
 
 finalize_model(lgbm)
 save_model(lgbm, 'xant_lgbm')
