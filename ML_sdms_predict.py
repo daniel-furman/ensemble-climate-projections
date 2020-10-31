@@ -32,10 +32,10 @@ warnings.filterwarnings("ignore")
 
 CLASS_MAP = {
 'Random Forest':('-', load_model('xant_rf')[23]),
-'XGBoost': ('-.', load_model('xant_xgb')[23]),
+'Blended (rf & cat)':('-.', load_model('xant_blended')[23]),
 'Extra Trees':('--', load_model('xant_etrees')[23]),
+'XGBoost': ('-.', load_model('xant_xgb')[23]),
 'LGBoost Machine':('-.', load_model('xant_lgbm')[23]),
-'Blended rf/lgbbm':('-.', load_model('xant_blended')[23]),
 'Catboost':('-.',load_model('xant_cboost')[23]),
 'MLP neural-net':('--', MLPClassifier(solver='adam'))
     }
@@ -94,7 +94,7 @@ for name, (line_fmt, model) in CLASS_MAP.items():
 # annotate AUC Plot     
 plt.legend(loc="lower right", shadow = True) 
 plt.title('Comparing Classifiers: Validation AUC')
-plt.plot([0, 1], [0, 1], 'k-', alpha = 0.3) #x=y line. Visual aid 
+#plt.plot([0, 1], [0, 1], 'k-', alpha = 0.3) #x=y line. Visual aid 
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate') 
