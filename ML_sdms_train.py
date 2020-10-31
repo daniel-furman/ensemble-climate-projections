@@ -53,3 +53,6 @@ finalize_model(blender_specific)
 save_model(blender_specific, 'xant_blended')
 
 print('PyCaret training ended \n\n')
+
+compare_models()
+
