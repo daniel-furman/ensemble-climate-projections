@@ -15,42 +15,36 @@ Created on Fri Aug 14 12:01:04 2020
 
 # see https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html
 
-
 # It is important the files match the eight CMIP6 models in 
 # model_names, and that the data are 2.5m resolution.
 
-import time # we will calculate the runtime
-import zipfile # library for unzipping function
+import time  # we will calculate the runtime
+import zipfile  # library for unzipping function
 import glob  # data loading functions
-import shutil # moving files within directories functions
+import shutil  # moving files within directories functions
 
-
-#relavent output folder in Harddrive, changes each scenario.
+# relavent output folder in Harddrive, changes each scenario.
 ssp = 'ssp126'
 output_dir = '/volumes/HardDrive/' + ssp + '_2061-2080'
 
-#make sure only 8 relavent zip are in downloads
+# make sure only 8 relevant zip are in downloads
 filenames = sorted(glob.glob('/Users/danielfurman/Downloads/wc2.1*.zip'))
-print('The file names are:', filenames) # print out filenames, 
-len(filenames) #Confirmed 8 total files
-
-
+print('The file names are:', filenames)  # print filenames
+len(filenames)  # Confirmed 8 total files
 
 start_time = time.time()
 
-for f in filenames: #f is index with string filenames
-    with zipfile.ZipFile(f,"r") as zip_ref:
+for f in filenames:  # f is index with string filenames
+    with zipfile.ZipFile(f, "r") as zip_ref:
         zip_ref.extractall(output_dir)
-        
 
-model_names = ['BCC-CSM2-MR', 'CanESM5','CNRM-CM6-1','CNRM-ESM2-1',
-               'IPSL-CM6A-LR' ,'MIROC-ES2L','MIROC6','MRI-ESM2-0']  
+model_names = ['BCC-CSM2-MR', 'CanESM5', 'CNRM-CM6-1', 'CNRM-ESM2-1',
+               'IPSL-CM6A-LR', 'MIROC-ES2L', 'MIROC6', 'MRI-ESM2-0']
 
-for model in model_names: 
-    original =  glob.glob(output_dir + 
-                          '/share/spatial03/worldclim/cmip6/7_fut/2.5m/'+ 
-                          model + '/' + ssp + '/wc*.tif')
-    #print(original)
-    shutil.move(original[0],output_dir)
-    
+for model in model_names:
+    original = glob.glob(output_dir +
+                         '/share/spatial03/worldclim/cmip6/7_fut/2.5m/' +
+                         model + '/' + ssp + '/wc*.tif')
+    shutil.move(original[0], output_dir)
+
 print("--- %s seconds ---" % (time.time() - start_time))
