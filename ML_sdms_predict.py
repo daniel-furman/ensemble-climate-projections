@@ -6,8 +6,9 @@ Created on Thu Oct 15 11:26:05 2020
 @author: danielfurman
 """
 
-# Now that we have trained and tuned our ML models, we are ready to predict
-# the validation set and examine the models' performance. We first print the
+# Now that we have trained our ML classifiers, we are ready to deploy the .pkl
+# files we saved from PyCaret's training and examine the model predictions
+# on the validation set and examine the models' performance. We first print 
 # validation set accuracy, as well as the F statistic and the 2x2 confusion
 # matrix. Finally, we visualize the AUC statistic with a ROC curve for each
 # model. We also examine the results of a blended model constructed from the 
@@ -15,17 +16,12 @@ Created on Thu Oct 15 11:26:05 2020
 
 import numpy as np
 import pandas as pd
-
 from sklearn.metrics import confusion_matrix
 from matplotlib import pyplot as plt
 from matplotlib import style
 from sklearn.metrics import roc_curve, auc, f1_score
 from sklearn.neural_network import MLPClassifier
 from pycaret.classification import *
-import sklearn.ensemble as ensemble
-from lightgbm import LGBMClassifier
-from xgboost import XGBClassifier
-from catboost import CatBoostClassifier
 
 env_data = pd.read_csv(
     '/Users/danielfurman/Data_science_code/xantusia-data-main/envtrain_corr.csv')
@@ -59,54 +55,17 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # create a dictionary of ML models, name -> (line format, classifier)
-# params set to those determined in ML_sdms_train.py
-# by printing load_model('pycaret-model')
-
+# models deployed from ML_sdms_train.py
 
 CLASS_MAP = {
-'Random Forest':('-', ensemble.RandomForestClassifier(bootstrap=True, ccp_alpha=0.0,
-                                                      class_weight=None,
-                       criterion='gini', max_depth=None, max_features='auto',
-                       max_leaf_nodes=None, max_samples=None,
-                       min_impurity_decrease=0.0, min_impurity_split=None,
-                       min_samples_leaf=1, min_samples_split=2,
-                       min_weight_fraction_leaf=0.0, n_estimators=100,
-                       n_jobs=-1, oob_score=False, random_state=5124, verbose=0,
-                       warm_start=False)),
-
-'XGBoost': ('-.', XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
-              colsample_bynode=1, colsample_bytree=1, gamma=0, gpu_id=-1,
-              importance_type='gain', interaction_constraints='',
-              learning_rate=0.300000012, max_delta_step=0, max_depth=6,
-              min_child_weight=1, missing=np.nan, monotone_constraints='()',
-              n_estimators=100, n_jobs=-1, num_parallel_tree=1,
-              objective='binary:logistic', random_state=5124, reg_alpha=0,
-              reg_lambda=1, scale_pos_weight=1, subsample=1, tree_method='auto',
-              validate_parameters=1, verbosity=0)),
-
-'Extra Trees':('--', ensemble.ExtraTreesClassifier(bootstrap=False, ccp_alpha=0.0,
-                                                   class_weight=None,
-                     criterion='gini', max_depth=None, max_features='auto',
-                     max_leaf_nodes=None, max_samples=None,
-                     min_impurity_decrease=0.0, min_impurity_split=None,
-                     min_samples_leaf=1, min_samples_split=2,
-                     min_weight_fraction_leaf=0.0, n_estimators=100, n_jobs=-1,
-                     oob_score=False, random_state=5124, verbose=0,
-                     warm_start=False)),
-
-'LGBoost Machine':('-.', LGBMClassifier(boosting_type='gbdt', class_weight=None,
-                                        colsample_bytree=1.0,
-               importance_type='split', learning_rate=0.1, max_depth=-1,
-               min_child_samples=20, min_child_weight=0.001, min_split_gain=0.0,
-               n_estimators=100, n_jobs=-1, num_leaves=31, objective=None,
-               random_state=5124, reg_alpha=0.0, reg_lambda=0.0, silent=True,
-               subsample=1.0, subsample_for_bin=200000, subsample_freq=0)),
-
-'Catboost':('-.', CatBoostClassifier(logging_level='Silent')),
-
+'Random Forest':('-', load_model('xant_rf')[23]),
+'XGBoost': ('-.', load_model('xant_xgb')[23]),
+'Extra Trees':('--', load_model('xant_etrees')[23]),
+'LGBoost Machine':('-.', load_model('xant_lgbm')[23]),
+'Blended rf/lgbbm':('-.', load_model('xant_blended')[23]),
+'Catboost':('-.',load_model('xant_cboost')[23]),
 'MLP neural-net':('--', MLPClassifier(solver='adam'))
     }
-
 
 training_data = env_data
 training_class = class_type
@@ -114,7 +73,7 @@ training_class = class_type
 validation_data = env_data_test
 validation_class = class_type_test
 
-f_score = np.zeros(len(CLASS_MAP)+1)
+f_score = np.zeros(len(CLASS_MAP))
 i = 0 #iterator
 
 # iterate over dictionary :
@@ -156,34 +115,10 @@ plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate') 
 plt.savefig('auc.png', dpi = 400)
 
-
-# finally, print model validation statistics for blended model
-env_data1 = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantusia-data-main/testbackg_corr.csv')
-env_data2 = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantusia-data-main/testpres_corr.csv')
-env_data1.insert(0, 'pa', 0)
-env_data2.insert(0, 'pa', 1)
-env_data_test = pd.concat([env_data1, env_data2])
-env_data_test = env_data_test.drop(['Unnamed: 0'], axis=1)
-print('\n')
-blender = load_model('xant_blended')
-predictions = predict_model(blender, data = env_data_test)
-pred_blend = predictions['Label'].astype(str).astype(int)
-
-print('\n\nFraction correct validation ' + 'Blended model' +' :' , 
-      np.sum(pred_blend == validation_class)/len(validation_class))
-cnf_matrix_test = confusion_matrix(validation_class, pred_blend)
-print(cnf_matrix_test)
-
-print('The F1 validation score is : ', f1_score(
-    validation_class, pred_blend))
-
 # create pandas dataframe with F statistic scores
 
-f_score[6] = f1_score(validation_class, pred_blend)
-columns = ['RForest', 'XGBoost', 'Extra Trees', 'LGBM', 'Catboost',
-           'MLP-net', 'Blended']
+columns = ['RForest', 'XGBoost', 'Extra Trees', 'LGBM', 'Blended', 'Catboost',
+           'MLP-net']
 f_score = pd.DataFrame(data = f_score.reshape(-1, len(f_score)),
                        columns=columns)
 f_score = f_score.rename(index={0: "F-statistic :"})
