@@ -54,5 +54,4 @@ save_model(blender_specific, 'xant_blended')
 
 print('PyCaret training ended \n\n')
 
-compare_models()
-
+compare_models() # print ordered 10-fold cv scores
