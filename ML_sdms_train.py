@@ -45,8 +45,8 @@ save_model(rf, 'xant_rf')
 finalize_model(lgbm)
 save_model(lgbm, 'xant_lgbm')
 
-blender_specific = blend_models(estimator_list=[rf, etrees, xgboost],
-                                method='soft')
+blender_specific = blend_models(estimator_list=[
+    rf, etrees, xgboost, lgbm, catboost], method='soft')
 finalize_model(blender_specific)
 save_model(blender_specific, 'xant_blended')
 

@@ -30,8 +30,8 @@ warnings.filterwarnings("ignore")
 # models deployed from ML_sdms_train.py
 
 CLASS_MAP = {
+    '5-model Blend': ('-.', load_model('xant_blended')[23]),
     'Random Forest': ('-', load_model('xant_rf')[23]),
-    'Blended': ('-.', load_model('xant_blended')[23]),
     'Extra Trees': ('--', load_model('xant_etrees')[23]),
     'XGBoost': ('-.', load_model('xant_xgb')[23]),
     'LGBoost Machine': ('-.', load_model('xant_lgbm')[23]),
