@@ -4,13 +4,13 @@
 
 ---
 
-All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first.
+All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. Also, see my open-source contributions to [pyimpute](https://github.com/perrygeo/pyimpute/pull/22), which was used for spatial classification in Python. 
 
 ### Workflow
 
 ---
 
-The `ML_sdms_.py` scripts train and validate ML classifiers with PyCaret and SKLearn, output in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses. Predictions were also performed in RStudio with the traditional species distribution dismo package in `sdms_2020.R`. The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB). Lastly, `_main.py` edits deprecated code within the pyimpute library, critical to performing geospatial predictions in Python, with the edits pending a pull request to the master branch.
+The `ML_sdms_.py` scripts train and validate ML classifiers using the low-code, high level PyCaret library. The outputs are available in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses. Predictions were checked by also performing the predcitions in RStudio, with the traditionally used dismo package, in `sdms_2020.R`. The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB). Lastly, `_main.py` fixed deprecated code within the pyimpute library, critical to performing geospatial classification in Python, [merged](https://github.com/perrygeo/pyimpute/pull/21) to the master branch of pyimpute.
 
 ### Data
 
@@ -62,6 +62,6 @@ for (i in 1:length(reqs$package)){
 
 ---
 
-Figures: To be filled closer to conference date. 
+Figures: To be filled closer to the conference date. 
 
 ---
