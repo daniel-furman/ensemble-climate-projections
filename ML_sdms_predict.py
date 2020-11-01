@@ -63,18 +63,19 @@ validation_class = class_type_test
 
 # perform validation set analyses, iterate over dictionary :
 
-f_score = np.zeros(len(CLASS_MAP))
+f_score = np.zeros(len(CLASS_MAP)) # initialize F score array
+col_names = [] # col_names for F score
 i = 0  # iterator
 style.use('default')
 plt.rcParams["figure.figsize"] = (6, 4)
 
 for name, (line_fmt, model) in CLASS_MAP.items():
     result = model.fit(training_data, training_class)
-    # array w one col per label}|
+    # array w one col per label
     preds = model.predict_proba(validation_data)
     pred = pd.Series(preds[:, 1])
     fpr, tpr, thresholds = roc_curve(validation_class, pred)
-    auc_score = auc(fpr, tpr)
+    auc_score = auc(fpr, tpr) 
     label = '%s: auc=%.4f' % (name, auc_score)
     plt.plot(fpr, tpr, line_fmt,
              linewidth=2, label=label)
@@ -88,6 +89,7 @@ for name, (line_fmt, model) in CLASS_MAP.items():
     print('The F1 validation score is : ',
           f1_score(validation_class, predicted_class_type))
     f_score[i] = f1_score(validation_class, predicted_class_type)
+    col_names.append(name)
     i = + (i + 1)
 
 # annotate AUC Plot     
@@ -100,10 +102,8 @@ plt.ylabel('True Positive Rate')
 plt.savefig('auc.png', dpi=400)
 
 # create pandas dataframe with F statistic scores
-columns = ['RForest', 'XGBoost', 'Extra Trees', 'LGBM', 'Blended', 'Catboost',
-           'MLP-net']
 f_score = pd.DataFrame(data=f_score.reshape(-1, len(f_score)),
-                       columns=columns)
+                       columns=col_names)
 f_score = f_score.rename(index={0: "F-statistic :"})
 f_score = f_score.sort_values(by="F-statistic :", axis=1,
                               ascending=False)
