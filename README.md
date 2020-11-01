@@ -4,7 +4,7 @@
 
 ---
 
-All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. Also, see my open-source contributions to [pyimpute](https://github.com/perrygeo/pyimpute/pull/22), which was used for spatial classification in Python. 
+All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. Also, see my open-source contributions to [pyimpute](https://github.com/perrygeo/pyimpute/pull/22), a spatial classification Python library. 
 
 ### Workflow
 
