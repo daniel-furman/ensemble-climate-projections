@@ -4,13 +4,13 @@
 
 ---
 
-All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. Also, see my open-source [contributions](https://github.com/perrygeo/pyimpute/pull/21) to pyimpute, the library that powers the spatial classification analyses.
+All code and data required to reproduce research presented at the SICB 2021 and SCCUR 2019 conferences. See [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. Spatial predictions were powered by the pyimpute library, see my [contributions](https://github.com/perrygeo/pyimpute/pull/21) (_main.py) merged at version 0.2. 
 
 ### Workflow
 
 ---
 
-The `ML_sdms_.py` scripts train and validate ML classifiers using the low-code, high level PyCaret library. The outputs are available in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses. Predictions were checked by also performing the predcitions in RStudio, with the traditionally used dismo package, in `sdms_2020.R`. The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB). Lastly, `_main.py` fixed deprecated code within the pyimpute library, critical to performing geospatial classification in Python, which was [merged](https://github.com/perrygeo/pyimpute/pull/21) to the master branch of pyimpute for version 0.2.
+The `ML_sdms_.py` scripts train and validate ML classifiers using the low-code, high level PyCaret library. The outputs are available in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses. Predictions were checked by also performing the predcitions in RStudio, with the traditionally used dismo package, in `sdms_2020.R`. The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB). Lastly, `_main.py` fixed deprecated code within the pyimpute library, critical to performing geospatial classification in Python, which was [merged](https://github.com/perrygeo/pyimpute/pull/21) to the master branch for version 0.2.
 
 ### Data
 
