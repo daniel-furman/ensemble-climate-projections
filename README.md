@@ -4,7 +4,7 @@
 
 ---
 
-All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/drive/u/0/folders/15nZUMuGLiINuhSuP6DJ6hg27YKZxeC9A) conferences. See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb) first. Spatial predictions were powered by the pyimpute library, see my [contributions](https://github.com/perrygeo/pyimpute/pull/21) merged at v. 0.2 (_main.py). 
+All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/drive/u/0/folders/15nZUMuGLiINuhSuP6DJ6hg27YKZxeC9A) conferences. See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). Spatial predictions were powered by the pyimpute library, see my [contributions](https://github.com/perrygeo/pyimpute/pull/21) merged at v. 0.2 (_main.py). 
 
 ### Workflow
 
