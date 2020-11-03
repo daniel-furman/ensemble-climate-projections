@@ -1,7 +1,3 @@
-### Select Writings
-
----
-
 ### 1 | Abstract
 The desert night lizard (*Xantusia vigilis*) is a habitat specialist abundantly spread across arid regions of the North American southwest, often reliant on Joshua tree branches (*Yucca brevifolia*) for shelter. Predictions of range restriction for *Y. brevifolia* are thus of particular concern for the night lizard’s ecological conservation. 
 
