@@ -17,34 +17,6 @@ The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret li
 ---
 All data required for the analyses is contained in a separate [repository](https://github.com/daniel-furman/xantusia-data). Climate data obtained from [Worldclim version 2](https://www.worldclim.org/) and presence data from GBIF. Future climate forecasts obtained from [CMIP6](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html), while the train_tifs represent near current conditions, averaged from 1970-2000. The raster data are on a 2.5 arc-minute grid and have the following extent: (92°W to 125°W and 20°N, 47°N).
 
-### Requirements
-
----
-
-Python dependencies are listed in a `requirements-py.txt` file, including the library version numbers. You can replicate the environment your codebase needs by using virtualenv:
-
-```
-# This creates the virtual environment
-cd $PROJECT-PATH
-virtualenv ensemble-climate-projections
-
-# Then install the dependencies by referring to the requirements-py.txt:
-
-# This installs the modules
-pip install -r requirements-py.txt
-
-# This activates the virtual environment
-source ensemble-climate-projections/bin/activate
-```
-R dependencies are listed in a `requirements-R.txt` file. You can replicate the environment your codebase needs by using install.packages():
-
-```
-reqs <- read.table('PROJECT-PATH/requirements-R.txt', col.names = c('package', 'version'))
-for (i in 1:length(reqs$package)){
-  install.packages(reqs$package[i]) # devtools::install_version if versions desired
-  }
-```
-
 ### Selected Writings
 
 ---
@@ -68,14 +40,5 @@ Modeling was conducted using the Python programming language (v. 3.7.6) with the
 
 #### 2.3 | Future Distribution Projections
 Models for X. vigilis and Y. Brevifolia were projected onto future climate , including four greenhouse gas scenarios, or shared socio-economic pathways (SSPs) for each of eight global climate models (GCMs) (CMIP6, Eyring et al., 2016), between two decade periods across the 21st century (2040-2100). The GCMs included BCC-CSM2-MR, CanESM5, CNRM-CM6-1, CNRM-ESM2-1, IPSL-CM6A-LR, MIROC-ES2L, MIROC6, and MRI-ESM2-0. The final consensus prediction used 480 models (spatial blend of five algorithms, eight GCMs, three time periods, and four SSPs). We then used an ensemble approach to identify levels of agreement among the projections, estimating the proportion of geographic range that remains climatically suitable with negligible species dispersal to novel areas. 
-
----
-
-
-### Poster Figures (SICB 2021)
-
----
-
-Figures: To be filled closer to the conference date. 
 
 ---
