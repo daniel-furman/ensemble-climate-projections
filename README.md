@@ -17,7 +17,7 @@ The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret li
 ---
 All data required for the analyses is contained in a separate [repository](https://github.com/daniel-furman/xantusia-data). Climate data obtained from [Worldclim version 2](https://www.worldclim.org/) and presence data from GBIF. Future climate forecasts obtained from [CMIP6](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html), while the train_tifs represent near current conditions, averaged from 1970-2000. The raster data are on a 2.5 arc-minute grid and have the following extent: (92°W to 125°W and 20°N, 47°N).
 
-### Selected Writings
+### Select Writings
 
 ---
 
@@ -39,7 +39,7 @@ We downloaded 19 bioclimatic rasters (2.5 arc-minute resolution; 1970-2000) from
 #### 2.1.2 | Presence Data
 Occurrence records were obtained from the publicly available Global Biodiversity Information Facility database (GBIF; www.gbif.org, downloaded November 1, 2020). We processed occurrence records to remove duplicates (within 1e-4 decimal degrees), erroneous (belonging to a different subspecies), and/or spatially biased (grid sampled) coordinates. The final sets of presences contained at most 25 presences per raster pixel. Background points, also known as pseudo-absences, were sampled at random to twice the number of species presences across the default extent factor (5 %).
 
-#### 2.2 | Species Distribution Modeling and Current Distributions
+#### 2.2 | Species Distribution Modeling
 Modeling was conducted using the Python programming language (v. 3.7.6) with the SciKit-Learn (v. 0.23.2;  Pedregosa et al., 2011), PyCaret (v. 2.2; Moez, 2019) and PyImpute libraries (v. 0.2 ; Perry, 2015) (see appendix repository for all Python libraries), using R with the dismo package (v. 1.1-4 ; site), and using the Maxent software (v. 3.4.1; Phillips et al., 2006; Phillips & Dudik, 2008). The covariate data were first split into training (80%) and validation (20%) sets to assess model stability and sensitivity; however, final models were built using 100% of the available data, definitively preserving small subgroups of presence data (e.g. the isolated X. vigilis Pinnacles clade). Five classifiers were selected from a set of over twenty candidates: Random Forest (rf), Extremely Randomized Trees (et), Light Gradient Boosting Machine (lightgbm), Extreme Gradient Boosting (xgboost), and Catboost Gradient Boosting (catboost), trained over ten partitions of random selections with replacement (10-fold cross validation), with a validation set performance of {F score > 0.939; AUC > .991, false negatives ~3%} . Spatial outputs of binary presence/absence were then blended so as to only include areas where all five classifiers predicted suitability, resulting in a prediction that best matched previous estimates of the species’ geospatial distribution.
 
 #### 2.3 | Future Distribution Projections
