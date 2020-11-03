@@ -6,16 +6,18 @@
 
 All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/drive/u/0/folders/15nZUMuGLiINuhSuP6DJ6hg27YKZxeC9A) conferences. See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). Spatial predictions were powered by the pyimpute library, see my [contributions](https://github.com/perrygeo/pyimpute/pull/21) merged at v. 0.2 (_main.py). 
 
-### Workflow
-
----
-
-The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret library. The outputs are available in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses. The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped geospatial data to its own [repository](https://github.com/daniel-furman/xantusia-data) which can be cloned before re-running the workflow (<1 GB).
 
 ### Data
 
 ---
-Link to repository: https://github.com/daniel-furman/xantusia-data. Climate information from 19 bioclimatic features (2.5 arc-minute resolution; 1970-2000; 92°W to 125°W and 20°N, 47°N) was downloaded from the publicly available [WorldClim database](www.worldclim.org) (v. 2.1, Fick & Hijmans, 2017). Presence data were downloaded from the publicly available Global Biodiversity Information Facility database ([GBIF](www.gbif.org), downloaded November 1, 2020). In addition, the most recently updated climate forecasts were obtained from [CMIP6](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html).  
+Link to [data repository](https://github.com/daniel-furman/xantusia-data). Climate information from 19 bioclimatic features (2.5 arc-minute resolution; 1970-2000; 92°W to 125°W and 20°N, 47°N) was downloaded from the publicly available [WorldClim database](www.worldclim.org) (v. 2.1, Fick & Hijmans, 2017). Presence data were downloaded from the publicly available Global Biodiversity Information Facility database ([GBIF](www.gbif.org), downloaded November 1, 2020). In addition, the most recently updated climate forecasts were obtained from [CMIP6](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html).  
+
+### Workflow
+
+---
+
+The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped the geospatial data (1000's of GB). The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret library. The outputs are available in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses.
+
 
 ### Select Writings
 
