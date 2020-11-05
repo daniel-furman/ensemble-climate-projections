@@ -18,7 +18,7 @@ from pycaret.classification import *
 from pandas import read_csv
 
 data = read_csv(
-    "/Users/danielfurman/Data_science_code/xantuisa-codebase/data/envtrain_xv.csv")
+    "/Users/danielfurman/Data_science_code/xantusia-codebase/data/envtrain_xv.csv")
 data = data.drop(['Unnamed: 0'], axis=1)
 exp_clf = setup(data, target='pa')
 

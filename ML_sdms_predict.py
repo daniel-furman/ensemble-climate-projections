@@ -41,13 +41,13 @@ CLASS_MAP = {
 # load training (80%) and test (20%) sets
 
 env_data = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantuisa-codebase/data/envtrain_xv.csv')
+    '/Users/danielfurman/Data_science_code/xantusia-codebase/data/envtrain_xv.csv')
 training_class = env_data['pa']
 env_data = env_data.drop(['Unnamed: 0'], axis=1)
 training_data = env_data.drop(['pa'], axis=1) # drop class
 
 env_data_test = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantuisa-codebase/data/envtest_xv.csv')
+    '/Users/danielfurman/Data_science_code/xantusia-codebase/data/envtest_xv.csv')
 validation_class = env_data_test['pa']
 env_data_test = env_data_test.drop(['Unnamed: 0'], axis=1)
 validation_data  = env_data_test.drop(['pa'], axis=1)
