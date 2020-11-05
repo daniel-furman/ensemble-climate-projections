@@ -35,31 +35,22 @@ CLASS_MAP = {
     'Extra Trees': ('--', load_model('xant_etrees')[23]),
     'XGBoost': ('-.', load_model('xant_xgb')[23]),
     'LGBoost Machine': ('-.', load_model('xant_lgbm')[23]),
-    'Catboost': ('-.', load_model('xant_cboost')[23]),
-    'MLP neural-net': ('--', MLPClassifier(solver='adam'))
-}
+    'Catboost': ('-.', load_model('xant_cboost')[23])
+    }
 
 # load training (80%) and test (20%) sets
 
 env_data = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantusia-data-main/envtrain_corr.csv')
-class_type = env_data['pa']
-env_data1 = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantusia-data-main/testbackg_corr.csv')
-env_data2 = pd.read_csv(
-    '/Users/danielfurman/Data_science_code/xantusia-data-main/testpres_corr.csv')
-env_data1.insert(0, 'pa', 0)
-env_data2.insert(0, 'pa', 1)
-env_data_test = pd.concat([env_data1, env_data2])
-class_type_test = env_data_test['pa']
+    '/Users/danielfurman/Data_science_code/xantuisa-codebase/data/envtrain_xv.csv')
+training_class = env_data['pa']
 env_data = env_data.drop(['Unnamed: 0'], axis=1)
-env_data = env_data.drop(['pa'], axis=1)
+training_data = env_data.drop(['pa'], axis=1) # drop class
+
+env_data_test = pd.read_csv(
+    '/Users/danielfurman/Data_science_code/xantuisa-codebase/data/envtest_xv.csv')
+validation_class = env_data_test['pa']
 env_data_test = env_data_test.drop(['Unnamed: 0'], axis=1)
-env_data_test = env_data_test.drop(['pa'], axis=1)
-training_data = env_data
-training_class = class_type
-validation_data = env_data_test
-validation_class = class_type_test
+validation_data  = env_data_test.drop(['pa'], axis=1)
 
 # perform validation set analyses, iterate over dictionary :
 

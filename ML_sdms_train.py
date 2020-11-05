@@ -17,9 +17,9 @@ Created on Thu Oct 15 11:26:03 2020
 from pycaret.classification import *
 from pandas import read_csv
 
-data = read_csv("/Users/danielfurman/Data_science_code/xantusia-data-main/xant-pycaret.csv")
-data = data.sample(frac=1)
-data = data.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
+data = read_csv(
+    "/Users/danielfurman/Data_science_code/xantuisa-codebase/data/envtrain_xv.csv")
+data = data.drop(['Unnamed: 0'], axis=1)
 exp_clf = setup(data, target='pa')
 
 # create models
