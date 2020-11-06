@@ -28,6 +28,7 @@ xgboost = create_model('xgboost')
 catboost = create_model('catboost')
 rf = create_model('rf')
 lgbm = create_model('lightgbm')
+log = create_model('lr')
 
 # save models as .pkl files
 finalize_model(etrees)
@@ -47,6 +48,10 @@ save_model(lgbm, 'xant_lgbm')
 
 blender_specific = blend_models(estimator_list=[
     rf, etrees, xgboost, lgbm, catboost], method='soft')
+
+finalize_model(log)
+save_model(log, 'xant_log')
+
 finalize_model(blender_specific)
 save_model(blender_specific, 'xant_blended')
 

@@ -30,12 +30,13 @@ warnings.filterwarnings("ignore")
 # models deployed from ML_sdms_train.py
 
 CLASS_MAP = {
-    '5-model Blend': ('-.', load_model('xant_blended')[23]),
-    'Random Forest': ('-', load_model('xant_rf')[23]),
-    'Extra Trees': ('--', load_model('xant_etrees')[23]),
-    'XGBoost': ('-.', load_model('xant_xgb')[23]),
+    'Random Forest': ('-.', load_model('xant_rf')[23]),
+    'Catboost': ('-.', load_model('xant_cboost')[23]),
     'LGBoost Machine': ('-.', load_model('xant_lgbm')[23]),
-    'Catboost': ('-.', load_model('xant_cboost')[23])
+    'Extra Trees': ('-.', load_model('xant_etrees')[23]),
+    'XGBoost': ('-.', load_model('xant_xgb')[23]),
+    'Logistic Regression' : ('-.', load_model('xant_log')[23]),
+    'Blend (BRTs & RF)': ('-', load_model('xant_blended')[23])
     }
 
 # load training (80%) and test (20%) sets
@@ -58,6 +59,9 @@ f_score = np.zeros(len(CLASS_MAP)) # initialize F score array
 col_names = [] # col_names for F score
 i = 0  # iterator
 style.use('default')
+style.use('ggplot')
+colors = ('tab:blue', 'tab:orange', 'tab:red', 'tab:grey', 'lightgreen', 
+          'darkgoldenrod', 'black')
 plt.rcParams["figure.figsize"] = (6, 4)
 
 for name, (line_fmt, model) in CLASS_MAP.items():
@@ -69,7 +73,7 @@ for name, (line_fmt, model) in CLASS_MAP.items():
     auc_score = auc(fpr, tpr) 
     label = '%s: auc=%.4f' % (name, auc_score)
     plt.plot(fpr, tpr, line_fmt,
-             linewidth=2, label=label)
+             linewidth=1.75, label=label, color = colors[i])
     # compute confusion matrix and F1 stat
     predicted_class_type = model.predict(validation_data)
     print('\n\nFraction correct validation ' + name + ' :',
@@ -85,8 +89,8 @@ for name, (line_fmt, model) in CLASS_MAP.items():
 
 # annotate AUC Plot     
 plt.legend(loc="lower right", shadow=True)
-plt.title('Comparing Classifiers: Validation AUC')
-# plt.plot([0, 1], [0, 1], 'k-', alpha = 0.3) #x=y line. Visual aid
+#plt.title('Comparing Classifiers: Validation AUC')
+plt.plot([0, 1], [0, 1], 'k-', alpha = 0.2) #x=y line. 
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
