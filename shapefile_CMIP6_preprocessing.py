@@ -5,17 +5,17 @@ Created on Fri Aug 14 12:01:04 2020
 
 @author: danielfurman
 """
-# This file unzips climate tifs downloaded from Worldclim.org, and 
+# This file unzips climate tifs downloaded from Worldclim.org, and
 # the expanded files are saved to a HardDrive folder "output_dir".
 # Manually unzipping eight tif files for a single ssp scenario
 # took 3 minutes and 24 seconds, in part due to an extensive opening
 # of subfolders. In contrast, this code runs in approximately 31
 # seconds, speeding processing by over 600%. Overall, we saved over
-# 30 minutes when we downloaded CMIP6 data for 12 scenarios. 
+# 30 minutes when we downloaded CMIP6 data for 12 scenarios.
 
 # see https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html
 
-# It is important the files match the eight CMIP6 models in 
+# It is important the files match the eight CMIP6 models in
 # model_names, and that the data are 2.5m resolution.
 
 import time  # we will calculate the runtime
