@@ -7,18 +7,22 @@ Created on Thu Oct 15 11:26:03 2020
 
 """
 
-# Binary classification with ten BioClim features. Five are a function of 
+# Binary classification with ten BioClim features. Five are a function of
 # precipitation and five of temperature, all de-correlated below a 0.5
 # correlation threshold. We use PyCaret to train and tune (10-fold cv) our
 # models from a  train set that contains 80%  of the total data. We find that
 # random forest, xgboost, lgbm, catboost, and extra trees algorithms perform
 # best. The last step was to create blended model from these five.
 
-from pycaret.classification import *
+from pycaret.classification import setup
+from pycaret.classification import create_model
+from pycaret.classification import finalize_model
+from pycaret.classification import save_model
+from pycaret.classification import blend_models
+from pycaret.classification import compare_models
 from pandas import read_csv
 
-data = read_csv(
-    "/Users/danielfurman/Data_science_code/xantusia-codebase/data/envtrain_xv.csv")
+data = read_csv('data/envtrain_xv.csv')
 data = data.drop(['Unnamed: 0'], axis=1)
 exp_clf = setup(data, target='pa')
 
