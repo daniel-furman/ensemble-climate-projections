@@ -1,4 +1,4 @@
-## Assessing Climate Change Impacts on a Pair of Symbiotic Species with Ensemble Projections of Species Distribution Models
+## Projections of Ensemble Species Distribution Models: Assessing Climate Change Impacts on a Pair of Symbiotic Species
 
 *How can models of climate change effects on geographic distributions incorporate symbiotic species relationships? What is the best quantification of uncertainty for climate forecasts in Southwestern deserts?*
 
