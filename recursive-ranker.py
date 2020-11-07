@@ -20,9 +20,9 @@ def recursive_ranker(
 
     '''
     
-    This function recursively selects de-correlated features for modeling
-    below a Spearman's metric threshold, using the rank of feature
-    importance scores.
+    This function recursively removes the most correlated modeling variables,
+    such that the final set is below a Spearman's threshold, using the rank of
+    feature importance scores.
 
     covariance: Pandas object containing the covariance matrix, with
         correlations between modeling variables, by definition containing
