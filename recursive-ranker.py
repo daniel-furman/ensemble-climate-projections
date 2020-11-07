@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Oct 15 11:26:05 2020
+Created on Thu Nov 15 11:26:05 2020
 
 @author: danielfurman
 """
@@ -43,12 +43,12 @@ def recursive_ranker(
     raw_data: The database from which your original covariance matrix was
         created from.
 
-    Warning
+    Warning:
     --------
     * The Pandas dataframes should all have variable names in the same order.
     * Make sure dependencies are installed: pandas, np, scipy.stats.spearmanr
     
-    Example
+    Example:
     --------
     * See https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-
     projections/blob/main/Comparing_MLs.ipynb, Appendix 1
@@ -65,32 +65,39 @@ def recursive_ranker(
     else:
         for i in np.arange(0, len(covariance)):
             for p in np.arange(0, len(covariance)):
-                if covariance.iloc[i, p] < threshold or covariance.iloc[
-                        i, p] == 1:
+                if covariance.iloc[i, p] < threshold:
                     covariance.iloc[i, p] = np.NaN
+            covariance.iloc[i, i] = np.NaN
+        
         maximum_corr = np.max(np.max(covariance))
-
+        
         for i in np.arange(0, len(covariance)):
             for p in np.arange(0, len(covariance)):
                 if covariance.iloc[i, p] == maximum_corr:
                     colname = list(covariance)[p]
                     rowname = list(covariance)[i]
-        min_imp = np.min([feature_importance.iloc[0, p],
-                          feature_importance.iloc[0, p]])
-        print('Dropping', rowname, 'or', colname, '\n')
+        min_imp = np.min([feature_importance[colname],
+                          feature_importance[rowname]])
+        
+        print('Comparing', rowname, 'or', colname)
 
         if feature_importance[colname].loc['importance'] == min_imp:
             raw_data.drop([colname], axis=1, inplace=True)
             feature_importance.drop([colname], axis=1, inplace=True)
+            print('Dropping', colname, '\n')
         else:
             raw_data.drop([rowname], axis=1, inplace=True)
             feature_importance.drop([rowname], axis=1, inplace=True)
+            print('Dropping', rowname, '\n')
+
         covariance = pd.DataFrame(spearmanr(raw_data).correlation,
                                   columns=list(feature_importance))
+        
         covariancenp = pd.DataFrame.to_numpy(covariance)
         covariancenp = np.triu(covariancenp)
+        
         covariance = pd.DataFrame(covariancenp, columns=list(covariance))
-
+        
         for i in np.arange(0, len(covariance)):
             covariance.rename(index={i: list(covariance)[i]}, inplace=True)
         covariance = covariance.abs()
@@ -98,10 +105,12 @@ def recursive_ranker(
 
         for i in np.arange(0, len(covar)):
             for p in np.arange(0, len(covar)):
-                if covar.iloc[i, p] < threshold or covar.iloc[i, p] == 1:
+                if covar.iloc[i, p] < threshold:
                     covar.iloc[i, p] = np.NaN
+            covar.iloc[i, i] = np.NaN
+            
         covariance_bool = covar.isna()
 
-        # go back to top 
+        # recursion call
         recursive_ranker(covariance, feature_importance, covariance_bool,
                          threshold, raw_data)

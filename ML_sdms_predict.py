@@ -24,6 +24,7 @@ import numpy as np
 import pandas as pd
 import eli5
 from eli5.sklearn import PermutationImportance
+from sklearn.inspection import permutation_importance
 
 warnings.filterwarnings("ignore")
 
@@ -32,12 +33,12 @@ warnings.filterwarnings("ignore")
 
 CLASS_MAP = {
     'Random Forest': ('-.', load_model('classifier_models(pkl)/xant_rf')[23]),
-    'Catboost': ('-.', load_model('classifier_models(pkl)/xant_cboost')[23]),
-    'LGBoost Machine': ('-.', load_model('classifier_models(pkl)/xant_lgbm')[23]),
-    'Extra Trees': ('-.', load_model('classifier_models(pkl)/xant_etrees')[23]),
-    'XGBoost': ('-.', load_model('classifier_models(pkl)/xant_xgb')[23]),
-    'Logistic Regression': ('-.', load_model('classifier_models(pkl)/xant_log')[23]),
-    'Blend (BRTs & RF)': ('-', load_model('classifier_models(pkl)/xant_blended')[23])
+    #'Catboost': ('-.', load_model('classifier_models(pkl)/xant_cboost')[23]),
+    #'LGBoost Machine': ('-.', load_model('classifier_models(pkl)/xant_lgbm')[23]),
+    #'Extra Trees': ('-.', load_model('classifier_models(pkl)/xant_etrees')[23]),
+    #'XGBoost': ('-.', load_model('classifier_models(pkl)/xant_xgb')[23]),
+    #'Logistic Regression': ('-.', load_model('classifier_models(pkl)/xant_log')[23]),
+    #'Blend (BRTs & RF)': ('-', load_model('classifier_models(pkl)/xant_blended')[23])
     }
 
 # load training (80%) and test (20%) sets
@@ -54,16 +55,29 @@ validation_data = env_data_test.drop(['pa'], axis=1)
 
 f_score = np.zeros(len(CLASS_MAP))
 col_names = []
+names_bclim = ["bclim1", "bclim10", "bclim11" ,"bclim12", "bclim13", "bclim14",
+              "bclim15", "bclim16", "bclim17", "bclim18", "bclim19", "bclim2", 
+              "bclim3",  "bclim4",  "bclim5",  "bclim6",  "bclim7",  "bclim8",
+              "bclim9"]
 feature_importances = []
+#perm_importances = []
+
 i = 0
+
 style.use('ggplot')
 colors = ('tab:blue', 'tab:orange', 'tab:red', 'tab:grey', 'lightgreen',
           'darkgoldenrod', 'black')
 plt.rcParams["figure.figsize"] = (6, 4)
 
 for name, (line_fmt, model) in CLASS_MAP.items():
+    col_names.append(name)
     result = model.fit(training_data, training_class)
     # feature importances via permutation
+    perm_importance = permutation_importance(result, validation_data,
+                        validation_class, random_state=100, n_repeats=10)
+    perm_importances = np.array(perm_importance.importances_mean)
+    perm_importances = pd.DataFrame(data=perm_importances.reshape(
+        -1, len(perm_importances)), columns=names_bclim)
     perm = PermutationImportance(result, random_state=100).fit(
         validation_data, validation_class)
     feature_importances.append(eli5.show_weights(
@@ -86,7 +100,6 @@ for name, (line_fmt, model) in CLASS_MAP.items():
     print('The F1 validation score is : ',
           f1_score(validation_class, predicted_class_type))
     f_score[i] = f1_score(validation_class, predicted_class_type)
-    col_names.append(name)
     i = (i + 1)
 
 # annotate ROC Plot
