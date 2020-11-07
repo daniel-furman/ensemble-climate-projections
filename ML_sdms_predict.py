@@ -33,12 +33,12 @@ warnings.filterwarnings("ignore")
 
 CLASS_MAP = {
     'Random Forest': ('-.', load_model('classifier_models(pkl)/xant_rf')[23]),
-    #'Catboost': ('-.', load_model('classifier_models(pkl)/xant_cboost')[23]),
-    #'LGBoost Machine': ('-.', load_model('classifier_models(pkl)/xant_lgbm')[23]),
-    #'Extra Trees': ('-.', load_model('classifier_models(pkl)/xant_etrees')[23]),
-    #'XGBoost': ('-.', load_model('classifier_models(pkl)/xant_xgb')[23]),
-    #'Logistic Regression': ('-.', load_model('classifier_models(pkl)/xant_log')[23]),
-    #'Blend (BRTs & RF)': ('-', load_model('classifier_models(pkl)/xant_blended')[23])
+    'Catboost': ('-.', load_model('classifier_models(pkl)/xant_cboost')[23]),
+    'LGBoost Machine': ('-.', load_model('classifier_models(pkl)/xant_lgbm')[23]),
+    'Extra Trees': ('-.', load_model('classifier_models(pkl)/xant_etrees')[23]),
+    'XGBoost': ('-.', load_model('classifier_models(pkl)/xant_xgb')[23]),
+    'Logistic Regression': ('-.', load_model('classifier_models(pkl)/xant_log')[23]),
+    'Blend (BRTs & RF)': ('-', load_model('classifier_models(pkl)/xant_blended')[23])
     }
 
 # load training (80%) and test (20%) sets
