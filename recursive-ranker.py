@@ -55,13 +55,13 @@ def recursive_ranker(
 
     '''
     
-    # base case should fail, see Example. 
+    # base case should fail on first loop through the function, see Example. 
     if covariance_bool.all(axis=None):
         print(covariance, '\n')
         fin = list(covariance)
         print('final set of variables: ', fin)
 
-    # recursive case call, designed to reach at the first call, see example
+    # recursive case call, designed to reach at the first call, see Example.
     else:
         for i in np.arange(0, len(covariance)):
             for p in np.arange(0, len(covariance)):
