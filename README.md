@@ -4,7 +4,7 @@
 
 ---
 
-See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/file/d/1Z9HJnW3p1tecLkUbK6zODJH1dMgzz06j/view?usp=sharing) conferences. Spatial predictions were powered by the pyimpute library, see my open-source [contributions](https://github.com/perrygeo/pyimpute/pull/21) therein. Also see my corresponding <a target="_blank" rel="noopener noreferrer" href="https://daniel-furman.github.io/py-sdms-tutorial/"> Python tutorial</a>.
+See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/file/d/1Z9HJnW3p1tecLkUbK6zODJH1dMgzz06j/view?usp=sharing) conferences. Spatial classification was powered by the pyimpute library, see my open-source [contributions](https://github.com/perrygeo/pyimpute/pull/21) therein. Also see my corresponding <a target="_blank" rel="noopener noreferrer" href="https://daniel-furman.github.io/py-sdms-tutorial/"> Python tutorial</a>.
 
 
 ### Data
@@ -16,4 +16,4 @@ The input data is located in the `data/` subfolder. Climate information from 19 
 
 ---
 
-The three pre-processing scripts (`CMIP6_preprocessing.py`, `shapefile_preprocessing.R`, and `SDMs_data_piping.R`) ETL'ed the geospatial data (1000's of GB). The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret library, aided by `recursive-ranker.py`'s feature selection (recursively removes features above a Spearman's threshold based on feature importance). These outputs are available in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses.`
+The three pre-processing scripts (`CMIP6_preprocessing.py`, `shapefile_preprocessing.R`, and `SDMs_data_piping.R`) ETL'ed the geospatial data (1000's of GB). The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret library, aided by the `recursive-ranker.py` script, which performs feature selection by recursively removing features above a Spearman's threshold, ranked based on feature importance. These outputs are available in `Comparing_MLs.ipynb` with geospatial predictions and future suitability ensemble analyses. Lastly, `pca.R` is a rought draft of the script that will find Jaccard similarity among 3d hulls of PCA features.
