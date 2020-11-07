@@ -19,6 +19,7 @@ def recursive_ranker(
         raw_data):
 
     '''
+    
     This function recursively selects de-correlated features for modeling
     below a Spearman's metric threshold, using the rank of feature
     importance scores.
@@ -32,8 +33,8 @@ def recursive_ranker(
         techniques that assign a score to input features based on how useful
         they are at predicting a target variable during classification.
 
-    covariance_bool: df.isna() used in the recursion call. Initialize by
-        passing the covariance dataframe to isna().
+    covariance_bool: Initialize by passing the covariance dataframe to
+        covariance.isna().
 
     threshold: A correlation value for which features are filtered below,
         Thresholds between 0.5 - 0.7 are commonly used (e.g. Dormann et al.,
@@ -46,6 +47,12 @@ def recursive_ranker(
     --------
     * The Pandas dataframes should all have variable names in the same order.
     * Make sure dependencies are installed: pandas, np, scipy.stats.spearmanr
+    
+    Example
+    --------
+    * See https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-
+    projections/blob/main/Comparing_MLs.ipynb, Appendix 1
+
     '''
 
     if covariance_bool.all(axis=None):
@@ -54,49 +61,44 @@ def recursive_ranker(
         print('final set of variables: ', fin)
 
     else:
-
         for i in np.arange(0, len(covariance)):
             for p in np.arange(0, len(covariance)):
                 if covariance.iloc[i, p] < threshold or covariance.iloc[
                         i, p] == 1:
                     covariance.iloc[i, p] = np.NaN
-
         maximum_corr = np.max(np.max(covariance))
 
         for i in np.arange(0, len(covariance)):
-            for p in np.arange(0, len(covariance)):      
-                if covariance.iloc[i,p] == maximum_corr:
+            for p in np.arange(0, len(covariance)):
+                if covariance.iloc[i, p] == maximum_corr:
                     colname = list(covariance)[p]
                     rowname = list(covariance)[i]
-        min_imp = np.min([feature_importance.iloc[0,p],
-                          feature_importance.iloc[0,p]])
-        print('Dropping one of', rowname,'/', colname,'\n') 
+        min_imp = np.min([feature_importance.iloc[0, p],
+                          feature_importance.iloc[0, p]])
+        print('Dropping', rowname, 'or', colname, '\n')
+
         if feature_importance[colname].loc['importance'] == min_imp:
-            raw_data.drop([colname], axis=1, inplace = True)
+            raw_data.drop([colname], axis=1, inplace=True)
             feature_importance.drop([colname], axis=1, inplace=True)
-            
         else:
             raw_data.drop([rowname], axis=1, inplace=True)
             feature_importance.drop([rowname], axis=1, inplace=True)
         covariance = pd.DataFrame(spearmanr(raw_data).correlation,
-                                  columns = list(feature_importance))
+                                  columns=list(feature_importance))
         covariancenp = pd.DataFrame.to_numpy(covariance)
         covariancenp = np.triu(covariancenp)
-        covariance = pd.DataFrame(covariancenp, columns = list(covariance))
+        covariance = pd.DataFrame(covariancenp, columns=list(covariance))
 
         for i in np.arange(0, len(covariance)):
-            covariance.rename(index={i: list(covariance)[i]}, inplace = True)
+            covariance.rename(index={i: list(covariance)[i]}, inplace=True)
         covariance = covariance.abs()
-        
         covar = covariance.copy(deep=True)
-        
+
         for i in np.arange(0, len(covar)):
             for p in np.arange(0, len(covar)):
-                if covar.iloc[i,p] < threshold or covar.iloc[i,p] == 1:
-                    covar.iloc[i,p] = np.NaN
-                    
+                if covar.iloc[i, p] < threshold or covar.iloc[i, p] == 1:
+                    covar.iloc[i, p] = np.NaN
         covariance_bool = covar.isna()
+
         recursive_ranker(covariance, feature_importance, covariance_bool,
                          threshold, raw_data)
-        
-        
