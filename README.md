@@ -16,4 +16,4 @@ The input data is located in the `data/` subfolder. Climate information from 19 
 
 ---
 
-The two pre-processing scripts (`CMIP6_preprocessing.py` and `shapefile_preprocessing.R`) efficiently piped the geospatial data (1000's of GB). The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret library. The outputs are available in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses.
+The three pre-processing scripts (`CMIP6_preprocessing.py`, `shapefile_preprocessing.R`, and `SDMs_data_piping.R`) ETL'ed the geospatial data (1000's of GB). The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret library, aided by `recursive-ranker.py`'s feature selection (recursively removes features above a Spearman's threshold based on feature importance). These outputs are available in `Comparing_MLs.ipynb` alongside geospatial predictions and future suitability ensemble analyses.`
