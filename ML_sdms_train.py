@@ -23,8 +23,9 @@ from pycaret.classification import compare_models
 from pandas import read_csv
 
 data = read_csv('data/envtrain_xv.csv')
-data = data.drop(['Unnamed: 0'], axis=1)
-exp_clf = setup(data, target='pa')
+#data = data.drop(['Unnamed: 0'], axis=1)
+exp_clf = setup(data, target='pa', session_id = 100, log_experiment = True,
+                experiment_name = 'xantusia') 
 
 # create models
 etrees = create_model('et')
@@ -36,28 +37,28 @@ log = create_model('lr')
 
 # save models as .pkl files
 finalize_model(etrees)
-save_model(etrees, 'xant_etrees')
+save_model(etrees, 'classifier_models(pkl)/xant_etrees')
 
 finalize_model(xgboost)
-save_model(xgboost, 'xant_xgb')
+save_model(xgboost, 'classifier_models(pkl)/xant_xgb')
 
 finalize_model(catboost)
-save_model(catboost, 'xant_cboost')
+save_model(catboost, 'classifier_models(pkl)/xant_cboost')
 
 finalize_model(rf)
-save_model(rf, 'xant_rf')
+save_model(rf, 'classifier_models(pkl)/xant_rf')
 
 finalize_model(lgbm)
-save_model(lgbm, 'xant_lgbm')
+save_model(lgbm, 'classifier_models(pkl)/xant_lgbm')
+
+finalize_model(log)
+save_model(log, 'classifier_models(pkl)/xant_log')
 
 blender_specific = blend_models(estimator_list=[
     rf, etrees, xgboost, lgbm, catboost], method='soft')
 
-finalize_model(log)
-save_model(log, 'xant_log')
-
 finalize_model(blender_specific)
-save_model(blender_specific, 'xant_blended')
+save_model(blender_specific, 'classifier_models(pkl)/xant_blended')
 
 print('PyCaret training ended \n\n')
 
