@@ -54,12 +54,14 @@ def recursive_ranker(
     projections/blob/main/Comparing_MLs.ipynb, Appendix 1
 
     '''
-
+    
+    # base case should fail, see Example. 
     if covariance_bool.all(axis=None):
         print(covariance, '\n')
         fin = list(covariance)
         print('final set of variables: ', fin)
 
+    # recursive case call, designed to reach at the first call, see example
     else:
         for i in np.arange(0, len(covariance)):
             for p in np.arange(0, len(covariance)):
@@ -100,5 +102,6 @@ def recursive_ranker(
                     covar.iloc[i, p] = np.NaN
         covariance_bool = covar.isna()
 
+        # go back to top 
         recursive_ranker(covariance, feature_importance, covariance_bool,
                          threshold, raw_data)
