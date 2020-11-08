@@ -53,15 +53,13 @@ validation_data = env_data_test.drop(['pa'], axis=1)
 
 # perform validation set analyses, iterate over dictionary :
 
+names_bclim = ['bclim11', 'bclim12', 'bclim14', 'bclim15', 'bclim18',
+               'bclim2', 'bclim3', 'bclim4', 'bclim6', 'bclim7', 'bclim8',
+               'bclim9']
+
 f_score = np.zeros(len(CLASS_MAP))
 col_names = []
-names_bclim = ["bclim1", "bclim10", "bclim11" ,"bclim12", "bclim13", "bclim14",
-              "bclim15", "bclim16", "bclim17", "bclim18", "bclim19", "bclim2", 
-              "bclim3",  "bclim4",  "bclim5",  "bclim6",  "bclim7",  "bclim8",
-              "bclim9"]
 feature_importances = []
-#perm_importances = []
-
 i = 0
 
 style.use('ggplot')

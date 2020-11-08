@@ -24,8 +24,9 @@ from pandas import read_csv
 
 data = read_csv('data/envtrain_xv.csv')
 #data = data.drop(['Unnamed: 0'], axis=1)
-exp_clf = setup(data, target='pa', session_id = 100, log_experiment = True,
-                experiment_name = 'xantusia') 
+exp_clf = setup(data, target='pa', session_id = 101, log_experiment = True,
+                experiment_name = 'xantusia_after')
+                #numeric_features = ['bclim14']) 
 
 # create models
 etrees = create_model('et')
