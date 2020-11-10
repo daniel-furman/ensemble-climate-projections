@@ -57,9 +57,10 @@ def recursive_ranker(
     
     # base case should fail on first loop through the function, see Example. 
     if covariance_bool.all(axis=None):
-        print(covariance, '\n')
         fin = list(covariance)
-        print('final set of variables: ', fin)
+        print('\nfinal set of variables: ', fin)
+        print('\nCovariance matrix (r < ', str(threshold), '):\n')
+        print(covariance)
 
     # recursive case call, designed to reach at the first call, see Example.
     else:
@@ -79,17 +80,16 @@ def recursive_ranker(
         min_imp = np.min([feature_importance[colname],
                           feature_importance[rowname]])
         
-        print('Comparing', rowname, 'or', colname)
-
+        #print('Comparing', rowname, 'or', colname)
         if feature_importance[colname].loc['importance'] == min_imp:
             raw_data.drop([colname], axis=1, inplace=True)
             feature_importance.drop([colname], axis=1, inplace=True)
-            print('Dropping', colname, '\n')
+            print('Comparing', rowname, 'or', colname, ' | Dropping', colname)
         else:
             raw_data.drop([rowname], axis=1, inplace=True)
             feature_importance.drop([rowname], axis=1, inplace=True)
-            print('Dropping', rowname, '\n')
-
+            print('Comparing', rowname, 'or', colname, ' | Dropping', rowname)
+            
         covariance = pd.DataFrame(spearmanr(raw_data).correlation,
                                   columns=list(feature_importance))
         
