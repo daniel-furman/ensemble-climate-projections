@@ -80,11 +80,8 @@ for (i in c(1:length(xv_raw$gbifID))){
 xv <- xv[!xv.duplicates,]
 # next load the Leavit et al., 2007 database
 xv_raw_Leavitt <- read.csv( 'data/raw/Leavitt_2007.csv', header = FALSE)
-colnames(xv_raw_Leavitt) <- c('lon','lat', 'Id')
-for (i in c(1:length(xv_raw_Leavitt$Id))){
-  xv_raw_Leavitt$Id[i] <- 'Leavitt et al., 2007 - Id ' + as.String(
-    xv_raw_Leavitt$Id[i])
-}
+colnames(xv_raw_Leavitt) <- c('lon','lat')
+
 # merge the two sets of Xantusia presences, filter one remaining duplicate
 xv <- rbind(xv_raw_Leavitt, xv)
 xv.duplicates <- duplicated(data.frame(xv$lon, xv$lat))
@@ -128,7 +125,7 @@ length(bg$bg.lon) #907
 colnames(bg) <- c('lon', 'lat')
 
 train <- rbind(acsel, bg)  # combine with presences 
-pa_train <- c(rep(1, nrow(acsel)), rep(0, nrow(bg))) # col of ones and zeros
+pa_train <- c(rep(1, nrow(acsel)), rep(0, nrow(bg)))
 train <- data.frame(cbind(CLASS=pa_train, train)) # final dataframe
 # make sure no duplicates between background and presences
 xv.train.duplicates <- duplicated(data.frame(train$lon,train$lat))
@@ -146,11 +143,12 @@ dataMap.xv  <- SpatialPointsDataFrame(train[,c(2,3)], class.pa,
 dir.create(path = "data/geofile-xv-presences/")
 writeOGR(dataMap.xv, 'data/geofile-xv-presences/xv.shp','xv',
          driver='ESRI Shapefile')
-# plot our points and check
-map_states <- us_boundaries("2000-12-31", states = c("California", "Arizona",
+# plot our points to check
+map_states <- us_boundaries("2000-12-31", states = c("California",
+                                                     "Arizona",
                                                      "Nevada", "Utah"))
 col2rgb("grey29")
-mycol <- rgb(74,74,74, max = 255, alpha = 125, names = "grey29")
+mycol <- rgb(74,74,74, max = 255, alpha = 200, names = "grey29")
 plot(train.layers[[1]], main='Bioclim 1')
 points(bg, col= mycol, pch = 14,cex=.25)
 points(acsel, col='black', pch = 16,cex=.35)
@@ -167,10 +165,9 @@ train_layers <- list.files(path =
   'data/train-rasters-2.5m/', pattern='asc', full.names=TRUE)
 predictors <- stack(train_layers) #, layers = feature_names)
 
-
-vars <- c('bclim11', 'bclim12', 'bclim15', 'bclim18', 'bclim2', 'bclim3',
-          'bclim4', 'bclim6', 'bclim7', 'bclim8', 'bclim9')
-predictors <- predictors[[vars]]
+#vars <- c('bclim11', 'bclim12', 'bclim14', 'bclim15', 'bclim18', 'bclim2',
+          #'bclim3', 'bclim4', 'bclim6', 'bclim7', 'bclim8', 'bclim9')
+#predictors <- predictors[[vars]]
 names(predictors) # confirm the set of variables you want
 
 group <- kfold(xv_final, 5) # divide into 5 groups
@@ -199,6 +196,45 @@ write.csv(envtrain, file ='data/envtrain_xv.csv', row.names=FALSE)
 write.csv(envtest, file ='data/envtest_xv.csv', row.names=FALSE)
 
 ## ------------------------------------------------------------------------
+
+# plot pycaret/sci-kit learn modeling results with false negatives
+
+py_blend <- raster('
+        outputsexp_id=101, xantusia_after/blender-baseline/responses.tif')
+py_blend <- py_blend*train.layers[[1]]/train.layers[[1]] #remove nas
+py_blend  <- calc(py_blend , fun=function(x){ x[x < 0.5] <- NA; return(x)} )
+
+wrong <- extract(py_blend, data.frame(xv_final$lon, xv_final$lat))
+wrong <- xv_final[which(is.na(wrong)),]
+wrong
+
+leav <- extract(py_blend, data.frame(xv_raw_Leavitt$lon, xv_raw_Leavitt$lat))
+wrong_leav <- xv_raw_Leavitt[which(is.na(leav)),]
+wrong_leav
+
+py_blend <- raster('
+    outputsexp_id=101, xantusia_after/blender-baseline/probability_1.0.tif')
+py_blend <- py_blend*train.layers[[1]]/train.layers[[1]] #remove nas
+
+#png(filename = 'outputsexp_id=101, xantusia_after/cont_baseline_xv.png',
+    #pointsize=5, width=2800, height=2000, res=800)
+plot(py_blend, main='')#, col = 'forest green')
+points(xv_final, col=mycol, pch = 16, cex=.3)
+#points(wrong_leav, col = 'red', pch = 16,cex=1)
+#points(wrong, col = 'red', pch = 18,cex=1)
+plot(st_geometry(map_states), add = TRUE)
+#dev.off()
+
+# compute collinearity for recursive ranker function
+
+#mat_1 <-round(cor(extract(predictors, xv_final), method = 'spearman'),7)
+#mat_1 <-abs(mat_1)
+#write.csv(data.frame(mat_1), 'data/collinearity/xv-baseline.csv',
+          #row.names=FALSE)
+#write.csv(extract(predictors, xv_final), 'data/collinearity/raw_data.csv',
+          #row.names=FALSE)
+
+## ------------------------------------------------------------------------
 # yucca brevifolia
 yb_raw <- read.csv('data/raw/yb_GBIF_presences.csv', header = TRUE)
 yb_raw <- yb_raw[which(yb_raw$countryCode=='US'),] # restrict to US
@@ -212,24 +248,122 @@ length(yb$lon)
 yb <- yb[which(yb$lon>=ext[1] & yb$lon<=ext[2]),] 
 yb <- yb[which(yb$lat>=ext[3] & yb$lat<=ext[4]),] 
 length(yb$lon)
-# xv[order(xv$lon),]
 
-# PCA similarity of climate through 21 century
+# gridded sampling
+r <- raster(ext, res = res(train.layers), crs = crs(train.layers))
+acsel <- gridSample(data.frame(yb$lon, yb$lat), r, n=2)
+head(acsel)
+colnames(acsel) <- c('lon', 'lat')
+length(acsel$lon) # 1325 after down from 3883 before
 
-# make pca transform of whole raster, transform x vigilis and y brev individually
-# then one cloud is transform of presences today and one is transform of presences 
-# in one clim scenario, do for one ssp?, average 8 gcms? 
+# sample background points from a slightly wider extent
+bg <- randomPoints(train.layers[[1]], length(acsel$lon),
+                   ext=ext, extf = 1) 
+colnames(bg) <- c('lon','lat')
+bg <- data.frame(bg)
+bg <- gridSample(data.frame(bg$lon, bg$lat), r, n=2) # grid sampled
+head(bg)
+length(bg$bg.lon) # 1325
+colnames(bg) <- c('lon', 'lat')
 
-# also check if collinearity changes at presences, since we aren't extrapolating
-# beyond their current geographic distribution
+train <- rbind(acsel, bg)  # combine with presences 
+pa_train <- c(rep(1, nrow(acsel)), rep(0, nrow(bg)))
+train <- data.frame(cbind(CLASS=pa_train, train)) # final dataframe
+# make sure no duplicates between background and presences
+yb.train.duplicates <- duplicated(data.frame(train$lon,train$lat))
+train  <- train[!yb.train.duplicates,]
+head(train)
 
-# Qiao et al., 2019
+# create spatial points object with 100% of presences
+crs <- crs(train.layers[[1]])
+train <- train[sample(nrow(train)),]
+class.pa <- data.frame(train[,1])
+colnames(class.pa) <- c('CLASS')
+dataMap.yb  <- SpatialPointsDataFrame(train[,c(2,3)], class.pa,
+                                      proj4string = crs)
+# write as shp for final modeling (100% of data)
+dir.create(path = "data/geofile-yb-presences/")
+writeOGR(dataMap.yb, 'data/geofile-yb-presences/yb.shp','yb',
+         driver='ESRI Shapefile')
+  
+plot(train.layers[[1]], main='Bioclim 1')
+points(bg, col= mycol, pch = 16,cex=.25)
+points(acsel, col='black', pch = 16,cex=.35)
+plot(st_geometry(map_states), add = TRUE)
 
-# Collinearity:
+## ------------------------------------------------------------------------
+# split into train and test dataframes with extracted values
+yb_final <- data.frame(train$lon[train$CLASS==1],train$lat[train$CLASS==1])
+colnames(yb_final) <- c('lon', 'lat')
+bg_final <- data.frame(train$lon[train$CLASS==0],train$lat[train$CLASS==0])
+colnames(bg_final) <- c('lon', 'lat')
+train_layers <- list.files(path = 
+  'data/train-rasters-2.5m/', pattern='asc', full.names=TRUE)
+predictors <- stack(train_layers) #, layers = feature_names)
 
-mat_1 <-round(cor(extract(predictors, xv_final), method = 'spearman'),7)
-mat_1 <-abs(mat_1)
-write.csv(data.frame(mat_1), 'data/collinearity/xv-baseline.csv')
-write.csv(extract(predictors, xv_final), 'data/collinearity/raw_data.csv')
-x <- rasterToPoints(train.layers[[1]]) 
-head(x, 2)
+vars <- c('bclim10', 'bclim12', 'bclim14', 'bclim15', 'bclim17',
+          'bclim18', 'bclim2', 'bclim3', 'bclim4', 'bclim6', 'bclim7',
+          'bclim8', 'bclim9')
+predictors <- predictors[[vars]]
+names(predictors) # confirm the set of variables you want
+
+group <- kfold(yb_final, 5) # divide into 5 groups
+pres_train <- yb_final[group != 1, ] # make a train set of 80 percent
+pres_test <- yb_final[group == 1, ] # make a test set of 20 percent
+write.csv(pres_train, 'data/yb_train_coords.csv')
+group <- kfold(yb_final, 5) # make background set of 
+backg_train <- bg_final[group != 1, ] # make back train
+backg_test <- bg_final[group == 1, ] # make back test
+envtrain_init <- rbind(pres_train, backg_train) 
+pb_train <- c(rep(1, nrow(pres_train)), rep(0, nrow(backg_train))) 
+envtrain <- extract(predictors, envtrain_init)
+envtrain <- data.frame(cbind(pa=pb_train, envtrain)) 
+envtrain <- envtrain[sample(nrow(envtrain)),]
+head(envtrain)
+envtest_init <- rbind(pres_test, backg_test)
+pb_test <- c(rep(1, nrow(pres_test)), rep(0, nrow(backg_test))) 
+envtest <- extract(predictors, envtest_init)
+envtest <- data.frame(cbind(pa=pb_test, envtest))
+envtest <- envtest[sample(nrow(envtest)),]
+head(envtest)
+length(envtrain$pa)
+length(envtest$pa)
+
+write.csv(envtrain, file ='data/envtrain_yb.csv', row.names=FALSE)
+write.csv(envtest, file ='data/envtest_yb.csv', row.names=FALSE)
+
+## ------------------------------------------------------------------------
+
+# plot pycaret/sci-kit learn modeling results
+
+py_blend <- raster(
+  'outputsexp_id=101, yucca_b/blender-baseline/responses.tif')
+py_blend <- py_blend*train.layers[[1]]/train.layers[[1]] #remove nas
+py_blend  <- calc(py_blend , fun=function(x){ x[x < 0.5] <- NA; return(x)} )
+
+wrong <- extract(py_blend, data.frame(yb_final$lon, yb_final$lat))
+wrong <- yb_final[which(is.na(wrong)),]
+wrong
+
+py_blend <- raster('
+    outputsexp_id=101, yucca_b/blender-baseline/probability_1.0.tif')
+py_blend <- py_blend*train.layers[[1]]/train.layers[[1]] #remove nas
+
+png(filename = 'outputsexp_id=101, yucca_b/cont_baseline_yb.png',
+pointsize=5, width=2800, height=2000, res=800)
+plot(py_blend, main='') #col = 'forest green')
+points(yb_final, col= mycol, pch = 16,cex=.3)
+#points(wrong, col = 'red', pch = 18,cex=1)
+plot(st_geometry(map_states), add = TRUE)
+dev.off()
+
+# compute collinearity for recursive ranker function
+
+#mat_1 <-round(cor(extract(predictors, yb_final), method = 'spearman'),7)
+#mat_1 <-abs(mat_1)
+#write.csv(data.frame(mat_1), 'data/collinearity/yb-baseline.csv',
+          #row.names=FALSE)
+#write.csv(extract(predictors, yb_final), 'data/collinearity/raw_data_yb.csv',
+         #row.names=FALSE)
+
+

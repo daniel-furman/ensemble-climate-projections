@@ -55,8 +55,11 @@ save_model(lgbm, 'classifier_models(pkl)/xant_lgbm')
 finalize_model(log)
 save_model(log, 'classifier_models(pkl)/xant_log')
 
+#blender_specific = blend_models(estimator_list=[
+    #rf, etrees, xgboost, lgbm, catboost], method='soft')
 blender_specific = blend_models(estimator_list=[
-    rf, etrees, xgboost, lgbm, catboost], method='soft')
+    etrees, lgbm, catboost], method='soft')
+
 
 finalize_model(blender_specific)
 save_model(blender_specific, 'classifier_models(pkl)/xant_blended')
