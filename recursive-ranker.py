@@ -43,8 +43,7 @@ def recursive_ranker(
     Warning:
     --------
     * The Pandas dataframes should all have variable names in the same order.
-    * Make sure dependencies are installed: pandas, np, scipy.stats.spearmanr,
-    sys
+    * Make sure dependencies are installed: pandas, np, scipy.stats.spearmanr
     
     Example:
     --------
@@ -67,7 +66,6 @@ def recursive_ranker(
                 covar.iloc[i, p] = np.NaN
         covar.iloc[i, i] = np.NaN
     covariance_bool = covar.isna()
-    
     if list(covariance) != list(feature_importance):
         sys.exit('Variable names need to be consistent')
 
@@ -85,9 +83,7 @@ def recursive_ranker(
                 if covariance.iloc[i, p] < threshold:
                     covariance.iloc[i, p] = np.NaN
             covariance.iloc[i, i] = np.NaN
-        
         maximum_corr = np.max(np.max(covariance))
-        
         for i in np.arange(0, len(covariance)):
             for p in np.arange(0, len(covariance)):
                 if covariance.iloc[i, p] == maximum_corr:
@@ -95,8 +91,6 @@ def recursive_ranker(
                     rowname = list(covariance)[i]
         min_imp = np.min([feature_importance[colname],
                           feature_importance[rowname]])
-        
-        #print('Comparing', rowname, 'or', colname)
         if feature_importance[colname].loc['importance'] == min_imp:
             raw_data.drop([colname], axis=1, inplace=True)
             feature_importance.drop([colname], axis=1, inplace=True)
@@ -105,10 +99,8 @@ def recursive_ranker(
             raw_data.drop([rowname], axis=1, inplace=True)
             feature_importance.drop([rowname], axis=1, inplace=True)
             print('Comparing', rowname, 'or', colname, ' | Dropping', rowname)
-            
         covariance = pd.DataFrame(spearmanr(raw_data).correlation,
                                   columns=list(feature_importance))
-
         # recursion call
         recursive_ranker(covariance, feature_importance,
                          threshold, raw_data)
