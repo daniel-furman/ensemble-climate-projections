@@ -107,14 +107,3 @@ writeRaster(Miroc6, filename=paste(
 writeRaster(MRI, filename=paste(
   'data/CMIP6/', tag, '/MRI/', names(MRI), sep = ""), bylayer=TRUE,
   format="GTiff", overwrite = TRUE)
-
-
-# BCC <- dropLayer(BCC,c(1,2,4,5,10,11,13,16,17)) #drop correlated variables
-# Can <- dropLayer(Can,c(1,2,4,5,10,11,13,16,17))
-# CNRMcm6 <- dropLayer(CNRMcm6,c(1,2,4,5,10,11,13,16,17))
-# CNRMesm2 <- dropLayer(CNRMesm2,c(1,2,4,5,10,11,13,16,17)) 
-# IPSL <- dropLayer(IPSL,c(1,2,4,5,10,11,13,16,17)) 
-# MirocES2L <- dropLayer(MirocES2L,c(1,2,4,5,10,11,13,16,17)) 
-# Miroc6 <- dropLayer(Miroc6,c(1,2,4,5,10,11,13,16,17)) 
-# MRI <- dropLayer(MRI,c(1,2,4,5,10,11,13,16,17))
-
