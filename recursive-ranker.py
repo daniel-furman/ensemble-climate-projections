@@ -11,6 +11,7 @@ import numpy as np
 from scipy.stats import spearmanr
 import sys
 
+
 def recursive_ranker(
         covariance,
         feature_importance,
@@ -26,10 +27,11 @@ def recursive_ranker(
     covariance: Pandas object containing the covariance matrix, with
         correlations between modeling variables, by definition containing
         ones along the diagonal. Variable names should only be above the
-        entries
+        entries.
 
     feature_importance: Pandas object containing a model's feature importance
-        scores in the first row. Feature importance is generally defined as
+        scores in the first row, with the same order of variables as the
+        covariance matrix. Feature importance is generally defined as
         techniques that assign a score to input features based on how useful
         they are at predicting a target variable during classification.
 
@@ -37,12 +39,12 @@ def recursive_ranker(
         Thresholds between 0.5 - 0.7 are commonly used (e.g. Dormann et al.,
         2013, doi: 10.1111/j.1600-0587.2012.07348.x).
 
-    raw_data: The database from which your original covariance matrix was
+    raw_data: The database from which the original covariance matrix was
         created from.
 
     Warning:
     --------
-    * The Pandas dataframes should all have variable names in the same order.
+    * The Pandas dataframes should have the same variables order.
     * Make sure dependencies are installed: pandas, np, scipy.stats.spearmanr
     
     Example:
@@ -55,9 +57,9 @@ def recursive_ranker(
     # initial transformations
     covariancenp = pd.DataFrame.to_numpy(covariance)
     covariancenp = np.triu(covariancenp)    
-    covariance = pd.DataFrame(covariancenp, columns = list(covariance))
+    covariance = pd.DataFrame(covariancenp, columns=list(covariance))
     for i in np.arange(0,len(covariance)):
-        covariance.rename(index={i: list(covariance)[i]}, inplace = True)
+        covariance.rename(index={i: list(covariance)[i]}, inplace=True)
     covariance = covariance.abs()
     covar = covariance.copy(deep=True)
     for i in np.arange(0, len(covar)):
@@ -66,6 +68,7 @@ def recursive_ranker(
                 covar.iloc[i, p] = np.NaN
         covar.iloc[i, i] = np.NaN
     covariance_bool = covar.isna()
+    # check order of variables
     if list(covariance) != list(feature_importance):
         sys.exit('Variable names need to be consistent')
 
