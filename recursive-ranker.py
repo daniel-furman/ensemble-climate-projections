@@ -26,14 +26,15 @@ def recursive_ranker(
 
     covariance: Pandas object containing the covariance matrix, with
         correlations between modeling variables, by definition containing
-        ones along the diagonal. Variable names should only be above the
-        entries.
+        ones along the diagonal. Variable names should be above the
+        entries and absent from the rows.
 
     feature_importance: Pandas object containing a model's feature importance
         scores in the first row, with the same order of variables as the
-        covariance matrix. Feature importance is generally defined as
-        techniques that assign a score to input features based on how useful
-        they are at predicting a target variable during classification.
+        covariance matrix. Variable names should be above the row. Feature
+        importance is generally defined as techniques that assign a score to
+        input features based on how useful they are at predicting a target
+        variable during classification.
 
     threshold: A correlation value for which features are filtered below,
         Thresholds between 0.5 - 0.7 are commonly used (e.g. Dormann et al.,
@@ -55,6 +56,7 @@ def recursive_ranker(
     '''
     
     # initial transformations
+    feature_importance.rename(index={0: 'importance'}, inplace = True)
     covariancenp = pd.DataFrame.to_numpy(covariance)
     covariancenp = np.triu(covariancenp)    
     covariance = pd.DataFrame(covariancenp, columns=list(covariance))
