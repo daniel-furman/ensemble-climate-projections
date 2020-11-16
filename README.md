@@ -17,4 +17,4 @@ The input data is located in the `data/` subfolder. Climate information from 19 
 
 ---
 
-The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret library. Modelling also relied on `recursive-ranker.py`, a function that recursively selects features for modeling below a Spearman's metric threshold, using the rank of feature importance scores. These outputs are available in `Comparing_MLs.ipynb` with geospatial predictions and future suitability ensemble analyses. Lastly, `pca.R` is a rought draft of the script that will find Jaccard similarity among 3d hulls for PCA features of climatic niche.
+The `ML_sdms_.py` scripts train and validate ML classifiers using the PyCaret library. Modelling also relied on `recursive-ranker.py`, a function that recursively selects features for modeling below a Spearman's metric threshold, using the rank of feature importance scores. These outputs are available in `Comparing_MLs.ipynb` with geospatial predictions and future suitability ensemble analyses. Lastly, `pca.R` calculates a benchmark for the variation between the model interpolation and extrapolation conditions. 
