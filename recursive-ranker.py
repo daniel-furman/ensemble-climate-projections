@@ -20,9 +20,10 @@ def recursive_ranker(
 
     '''
     
-    This function recursively removes the most correlated modeling variables,
-    such that the final set is below a Spearman's threshold, using the rank of
-    feature importance scores to decide between variables to drop. 
+    This function recursively removes correlated modeling variables, first
+    filtering the most correlated pairs, such that all the features are
+    below a Spearman's statistic threshold. The rank of feature importance
+    scores is employed to decide which variables to drop at each iteration.
 
     covariance: Pandas object containing the covariance matrix, with
         correlations between modeling variables, by definition containing
@@ -34,19 +35,19 @@ def recursive_ranker(
         covariance matrix. Variable names should be above the row. Feature
         importance is generally defined as techniques that assign a score to
         input features based on how useful they are at predicting a target
-        variable during classification.
+        variable. Importance scores can vary, and you should therefore
+        at least take a look at the associated uncertainties. 
 
     threshold: A correlation value for which features are filtered below,
         Thresholds between 0.5 - 0.7 are commonly used (e.g. Dormann et al.,
         2013, doi: 10.1111/j.1600-0587.2012.07348.x).
 
-    raw_data: The database from which the original covariance matrix was
-        created from.
+    raw_data: The data that created the covariance matrix.
 
     Warning:
     --------
-    * The Pandas dataframes should have the same variables order.
-    * Make sure dependencies are installed: pandas, np, scipy.stats.spearmanr
+    * The Pandas dataframes should have the same order of variables.
+    * Make sure dependencies are installed: pandas, np, scipy.stats.spearmanr.
     
     Example:
     --------
