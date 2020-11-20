@@ -23,7 +23,7 @@ import zipfile  # library for unzipping function
 import glob  # data loading functions
 import shutil  # moving files within directories functions
 
-# relavent output folder in Harddrive, changes each scenario.
+# output folder
 ssp = 'ssp126'
 output_dir = '/volumes/HardDrive/' + ssp + '_2061-2080'
 
