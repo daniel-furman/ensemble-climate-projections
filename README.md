@@ -16,17 +16,20 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 * SDMs: Associates presence locations to environmental variables to estimate niche
 * Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolate across time`
 
-**What underlying uncertainties are contained in geospatial climate change forecasts?** The distribution models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade periods. Habitat with suitable underlying climatic conditions for X. vigilis declined from ~51% to ~9.3% of the current range, akin to range restrictions predicted for Y. brevifolia, from ~48% to ~8.6%. Uncertainty among climate forecasts was measured from the spatial overlap: a mean is taken where at least five GCMs agree, the minimum and maximum are taken where at least two and where all eight GCMs agree, respectively.
+<br>
+
+**What underlying uncertainties are contained in geospatial climate change forecasts?** The distribution models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade periods. Habitat with suitable underlying climatic conditions for X. vigilis declined from ~51% to ~9.3% of its current range, akin to range restrictions predicted for Y. brevifolia, from ~48% to ~8.6%. Uncertainty among climate forecasts was measured from spatial overlap: a mean was taken where at least five GCMs agree, the minimum and maximum were taken where at least two and where all eight GCMs agree, respectively.
+
+<img src="data/ensemble_extrapolation.png" width = 700/>
 
 **How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?** We predicted large overlap between species' distributions across future climate forecasts (~x to ~y), a proxy for the underlying similarity in their climatic niche. We best controlled modelling error by taking a well-fit soft voting ensemble, as well as by benchmarking environmental change across interpolation and extrapolation conditions.
 
 
-### Workflow
+### Programming Workflow
 
 ---
 
 The `ML_sdms_.py` either train or validate classifiers, leaning on the PyCaret and scikit learn libraries. The `recursive-ranker.py` function recursively selected features for the modeling, below a Spearman's metric threshold. We used the rank of feature importance scores to decide which variables to drop at each recursive call. These outputs are available in `Comparing_MLs.ipynb`, along with the geospatial predictions for the baseline and future climates. Lastly, `pca_benchmark.R` calculates the similarity between the model interpolation and extrapolation data using a Jacard similarity metric among principal components. 
-
 
 
 ### Data
