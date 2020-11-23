@@ -1,7 +1,7 @@
 ## Assessing Climate Change Impacts on a Pair of Symbiotic Species with Ensemble Species Distribution Models
 
 
-*How can models of climate change effects on geographic distributions incorporate symbiotic species relationships? What underlying uncertainties are contained in geospatial climate change forecasts?*
+*What underlying uncertainties are contained in geospatial climate change forecasts? How can models of climate change effects on geographic distributions incorporate symbiotic species relationships?*
 
 ---
 
