@@ -14,14 +14,11 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 * SDMs: Associates presence locations to environmental variables to estimate niche
 * Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolate across time`
 
-<br>
-
 **Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?*** The distribution models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade periods. Habitat with suitable underlying climatic conditions for X. vigilis declined by ~51% to ~9.3% of its current range, akin to range restrictions predicted for Y. brevifolia, by ~48% to ~8.6% of its baseline range. Uncertainty among climate forecasts was measured from spatial overlap: the mean was taken where at least five GCMs agree and the minimum and maximum were taken where at least two and where all eight GCMs agree, respectively.
 
 <p align="center"> <img src="data/ensemble_extrapolation.png" width = 630/>
 
 **Question 2: *How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?*** We predicted large overlap between species' distributions across future climate forecasts (~x to ~y), a proxy for the underlying similarity in their climatic niche. We best controlled modelling error by taking a well-fit soft voting ensemble, as well as by benchmarking environmental change across interpolation and extrapolation conditions.
-
 
 ### Programming Workflow
 
