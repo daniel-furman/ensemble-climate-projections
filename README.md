@@ -14,7 +14,7 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 
 * Niche: An envelope of abiotic and biotic factors suitable to the survival of a species
 * SDMs: Associates presence locations to environmental variables to estimate niche
-* SDM Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolate across time`
+* Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolate across time`
 
 **What underlying uncertainties are contained in geospatial climate change forecasts?** The distribution models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade periods. Habitat with suitable underlying climatic conditions for X. vigilis declined from ~51% to ~9.3% of the current range, akin to range restrictions predicted for Y. brevifolia, from ~48% to ~8.6%. Uncertainty among climate forecasts was measured from the spatial overlap: a mean is taken where at least five GCMs agree, the minimum and maximum are taken where at least two and where all eight GCMs agree, respectively.
 
