@@ -10,8 +10,6 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 ### Introduction to Study
 ---
 
-**Definitions**
-
 * Niche: An envelope of abiotic and biotic factors suitable to the survival of a species
 * SDMs: Associates presence locations to environmental variables to estimate niche
 * Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolate across time`
