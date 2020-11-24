@@ -389,28 +389,28 @@ curr_xv
 
 l = 1
 for (i in scenarios) {
-  BCC <- raster(paste('/Volumes/HardDrive/xantusia-codebase/data/CMIP6/',
+  BCC <- raster(paste('data/CMIP6/',
                     i,'/BCC/responses.tif', sep = ""))
   BCC <- BCC*train.layers[[1]]/train.layers[[1]]
-  Can <- raster(paste('/Volumes/HardDrive/xantusia-codebase/data/CMIP6/',
+  Can <- raster(paste('data/CMIP6/',
                     i,'/Can/responses.tif', sep = ""))
   Can <- Can*train.layers[[1]]/train.layers[[1]]
-  CNRMcm6 <- raster(paste('/Volumes/HardDrive/xantusia-codebase/data/CMIP6/',
+  CNRMcm6 <- raster(paste('data/CMIP6/',
                     i,'/CNRMcm6/responses.tif', sep = ""))
   CNRMcm6 <- CNRMcm6*train.layers[[1]]/train.layers[[1]]
-  CNRMesm2 <- raster(paste('/Volumes/HardDrive/xantusia-codebase/data/CMIP6/',
+  CNRMesm2 <- raster(paste('data/CMIP6/',
                     i,'/CNRMesm2/responses.tif', sep = ""))
   CNRMesm2 <- CNRMesm2*train.layers[[1]]/train.layers[[1]]
-  IPSL <- raster(paste('/Volumes/HardDrive/xantusia-codebase/data/CMIP6/',
+  IPSL <- raster(paste('data/CMIP6/',
                     i,'/IPSL/responses.tif', sep = ""))
   IPSL <- IPSL*train.layers[[1]]/train.layers[[1]]
-  Miroc6 <- raster(paste('/Volumes/HardDrive/xantusia-codebase/data/CMIP6/',
+  Miroc6 <- raster(paste('data/CMIP6/',
                     i,'/Miroc6/responses.tif', sep = ""))
   Miroc6 <- Miroc6*train.layers[[1]]/train.layers[[1]]
-  MirocES2L <- raster(paste('/Volumes/HardDrive/xantusia-codebase/data/CMIP6/',
+  MirocES2L <- raster(paste('data/CMIP6/',
                     i,'/MirocES2L/responses.tif', sep = ""))
   MirocES2L <- MirocES2L*train.layers[[1]]/train.layers[[1]]
-  MRI <- raster(paste('/Volumes/HardDrive/xantusia-codebase/data/CMIP6/',
+  MRI <- raster(paste('data/CMIP6/',
                     i,'/MRI/responses.tif', sep = ""))
   MRI <- MRI*train.layers[[1]]/train.layers[[1]]
   future_overlap <- BCC+Can+CNRMcm6+CNRMesm2+IPSL+Miroc6+MirocES2L+MRI
@@ -424,10 +424,14 @@ for (i in scenarios) {
   overlap_two_pixels # the upper error bar
   five_plus_suitable_pixels <- calc(proj_and_current, fun=function(x){ x[x < 105] <-
     NA; return(x)} )
+  writeRaster(five_plus_suitable_pixels, filename = paste(
+    'data/CMIP6/', i, '/five_plus_xv.tif', sep = ""), format="GTiff", overwrite = TRUE)
   five_plus_suitable_pixels <- cellStats(five_plus_suitable_pixels,
                                        function(i, ...) sum(!is.na(i)))
   overlap_five_pixels <- five_plus_suitable_pixels / curr_xv
   overlap_five_pixels # the quasi median
+
+  
   eight_plus_suitable_pixels <- calc(proj_and_current, fun=function(x){ x[x < 108] <-
     NA; return(x)} )
   eight_plus_suitable_pixels <- cellStats(eight_plus_suitable_pixels,
@@ -515,6 +519,8 @@ for (i in scenarios) {
   overlap_two_pixels # the upper error bar
   five_plus_suitable_pixels <- calc(proj_and_current, fun=function(x){ x[x < 105] <-
     NA; return(x)} )
+  writeRaster(five_plus_suitable_pixels, filename = paste(
+    'data/CMIP6/', i, '/five_plus_yb.tif', sep = ""), format="GTiff")
   five_plus_suitable_pixels <- cellStats(five_plus_suitable_pixels,
                                          function(i, ...) sum(!is.na(i)))
   overlap_five_pixels <- five_plus_suitable_pixels / curr_xv
@@ -531,12 +537,45 @@ for (i in scenarios) {
 }
 
 overlapped_stats_yb
-#write.csv(overlapped_stats_yb,"data/overlapped_stats_yb.csv",
-          #row.names = TRUE)
 
-png(filename = 'data/CMIP6/ssp370_2081-2100/yb/future_overlap.png',
-    pointsize=5, width=2800, height=2000, res=800)
-plot(py_blend) #, color = 'greens')
+# calculate species overlap for baseline
+
+py_blend <- raster(paste('outputsexp_id=101, yucca',
+        '_b/blender-baseline/responses.tif', sep = ""))
+py_blend1 <- raster(paste('outputsexp_id=101, xantusia',
+        '_after/blender-baseline/responses.tif', sep = ""))
+both_species = py_blend1 + py_blend
+both_species  <- calc(both_species  , fun=
+                function(x){ x[x < 0.5] <- NA; return(x)})
+plot(both_species)
+union <- cellStats(both_species, function(i, ...) sum(!is.na(i)))
+both_species  <- calc(both_species  , fun=
+                        function(x){ x[x < 1.5] <- NA; return(x)})
+intersection <- cellStats(both_species, function(i, ...) sum(!is.na(i)))
+intersection/union
+
+plot(both_species) #, color = 'greens')
 plot(st_geometry(map_states), add = TRUE)
-dev.off()
 
+overlapped_sp = c(0,0,0,0,0,0,0,0,0,0,0,0)
+
+l = 1
+for (i in scenarios) {
+  py_blend <- raster(paste('data/CMIP6/', i, '/five_plus_xv.tif', sep = ""))
+  py_blend  <- calc(py_blend  , fun=
+        function(x){ x[is.na(x)] <- 0; return(x)})
+  py_blend1 <- raster(paste('data/CMIP6/', i, '/five_plus_yb.tif', sep = ""))
+  py_blend1  <- calc(py_blend1  , fun=
+                      function(x){ x[is.na(x)] <- 0; return(x)})
+  both_species = py_blend1 + py_blend
+  both_species  <- calc(both_species  , fun=
+                          function(x){ x[x < 105] <- NA; return(x)})
+  union <- cellStats(both_species, function(i, ...) sum(!is.na(i)))
+  both_species  <- calc(both_species  , fun=
+                          function(x){ x[x < 210] <- NA; return(x)})
+  intersection <- cellStats(both_species, function(i, ...) sum(!is.na(i)))
+  overlapped_sp[l] <- intersection/union
+  l <- l+1
+}
+#species overlap:
+mean(as.numeric(overlapped_sp))
