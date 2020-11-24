@@ -14,7 +14,7 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 * SDMs: Associates presence locations to environmental variables to estimate niche
 * Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolate across time`
 
-**Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?*** An ensemble of Species Distribution Models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade time periods. Across these conditions, we predicted similar decline in suitable habitat for X. vigilis (~51% to ~9.3% of baseline) and Y. brevifolia (~48% to ~8.6% of baseline), considering areas where at least five GCMs overlapped within the baseline range (intersection / baseline).
+**Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?*** An ensemble of Species Distribution Models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade time periods. Across these conditions, we predicted similar decline in suitable habitat for *X. vigilis* (~51% to ~9.3% of baseline) and *Y. brevifolia* (~48% to ~8.6% of baseline), considering areas where at least five GCMs overlapped within the baseline range (intersection / baseline).
 
 <p align="center"> <img src="data/ensemble_extrapolation.png" width = 630/>
 
