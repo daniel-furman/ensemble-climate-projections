@@ -7,20 +7,20 @@
 
 See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/file/d/114wmqQgjkc5DHLQmVI19AvlTw4K_daYQ/view?usp=sharing) conferences. Spatial classification was powered by the pyimpute library, see my open-source [contributions](https://github.com/perrygeo/pyimpute/pull/21) therein. Also see my corresponding <a target="_blank" rel="noopener noreferrer" href="https://daniel-furman.github.io/py-sdms-tutorial/"> tutorial</a> on predicting geospatial distributions with machine learning models in Python.
 
-### Introduction to Study
+### Part 1: Introduction to Study
 ---
 
 * Niche: An envelope of abiotic and biotic factors suitable to the survival of a species
-* SDMs: Associates presence locations to environmental variables to estimate niche
-* Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolate across time`
+* SDMs: Associates presence locations to environmental variables, ideally an estimate of fundamental niche
+* Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolation across time`
 
-**Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?*** An ensemble of Species Distribution Models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade time periods. Across these conditions, we predicted similar decline in suitable habitat for *X. vigilis* (~51% to ~9.3% of baseline) and *Y. brevifolia* (~48% to ~8.6% of baseline), considering areas where at least five GCMs overlapped within the baseline range (intersection / baseline).
+**Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?*** An ensemble of Species Distribution Models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade time periods. Across these conditions, we predicted similar decline in suitable habitat for *X. vigilis* (51% to 9.3% of baseline) and *Y. brevifolia* (48% to 8.6% of baseline), considering areas where at least five GCMs overlapped, assuming negligible species dispersal (area intersection / baseline).
 
-<p align="center"> <img src="data/ensemble_extrapolation.png" width = 630/>
+<img src="data/ensemble_extrapolation.png" width = 630/>
 
-**Question 2: *How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?*** We minimized modelling error by using a soft voting ensemble of well-fit classifiers, as well as by benchmarking climatic change between interpolation and extrapolation data, with Jaccard Similarity among principal components. Over the above forecasts, we predicted constricting spatial overlap between the species (~56% decrease from baseline climate, on average), which worsened further into the future. 
+**Question 2: *How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?*** We minimized modelling error by using a soft voting ensemble of well-fit classifiers, as well as by benchmarking climatic change between interpolation and extrapolation data, with Jaccard Similarity among principal components. Over the above forecasts, we predicted constricting spatial overlap between the species (~56% decrease from baseline climate, on average), which worsened across time. 
 
-**Conclusion:** Our results reveal the importance of symbiotic species relationships in Species Distribution Models of climate change effects. We hypothesize that habitat degradation will be heightened for areas with both severe change in climate and environmental catastrophe, such as strong wildfire. We next aim to identify the populations most overlapped across time, primarily so to target ecological conservation. 
+**Conclusion:** Our results reveal the importance of symbiotic species relationships in Species Distribution Models of climate change effects. We hypothesize that habitat degradation will be heightened for areas with both severe change in climate and environmental catastrophe, such as strong wildfire. We next strive to identify the areas most overlapped across time, primarily so to target ecological conservation for local species populations.   
 
 ### Programming Workflow
 
