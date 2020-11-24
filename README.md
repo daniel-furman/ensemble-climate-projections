@@ -16,7 +16,7 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 
 **Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?*** An ensemble of Species Distribution Models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade time periods. Across these conditions, we predicted similar decline in suitable habitat for *X. vigilis* (51% to 9.3% of baseline) and *Y. brevifolia* (48% to 8.6% of baseline), considering areas where at least five GCMs overlapped, assuming negligible species dispersal (area intersection / baseline).
 
-<img src="data/ensemble_extrapolation.png" width = 630/>
+<p align="center"><img src="data/ensemble_extrapolation.png" width = 630/>
 
 **Question 2: *How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?*** We minimized modelling error by using a soft voting ensemble of well-fit classifiers, as well as by benchmarking climatic change between interpolation and extrapolation data, with Jaccard Similarity among principal components. Over the above forecasts, we predicted constricting spatial overlap between the species (~56% decrease from baseline climate, on average), which worsened across time. 
 
