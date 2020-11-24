@@ -7,7 +7,7 @@
 
 See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/file/d/114wmqQgjkc5DHLQmVI19AvlTw4K_daYQ/view?usp=sharing) conferences. Spatial classification was powered by the pyimpute library, see my open-source [contributions](https://github.com/perrygeo/pyimpute/pull/21) therein. Also see my corresponding <a target="_blank" rel="noopener noreferrer" href="https://daniel-furman.github.io/py-sdms-tutorial/"> tutorial</a> on predicting geospatial distributions with machine learning models in Python.
 
-### Part 1: Introduction to Study
+### Introduction 
 ---
 
 * Niche: An envelope of abiotic and biotic factors suitable to the survival of a species
@@ -20,7 +20,7 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 
 **Question 2: *How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?*** We minimized modelling error by using a soft voting ensemble of well-fit classifiers, as well as by benchmarking climatic change between interpolation and extrapolation data, with Jaccard Similarity among principal components. Over the above forecasts, we predicted constricting spatial overlap between the species (~56% decrease from baseline climate, on average), which worsened across time. 
 
-**Conclusion:** Our results reveal the importance of symbiotic species relationships in Species Distribution Models of climate change effects. We hypothesize that habitat degradation will be heightened for areas with both severe change in climate and environmental catastrophe, such as strong wildfire. We next strive to identify the areas most overlapped across time, primarily so to target ecological conservation for local species populations.   
+**Conclusion:** Our results reveal the importance of symbiotic species relationships in Species Distribution Models of climate change effects. We hypothesize that habitat degradation will be heightened for areas with both severe change in climate and environmental catastrophe, such as strong wildfire. We next strive to identify the areas most overlapped across time, primarily so to target ecological conservation for local species populations.  
 
 ### Programming Workflow
 
