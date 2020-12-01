@@ -12,5 +12,7 @@ geometry 0.4.5
 rgl 0.100.54
 rgdal 1.5-18
 DescTools 0.99.38
-
+rgeos 0.5-5
+sf 0.9-6
+USAboundaries 0.3.1
 
