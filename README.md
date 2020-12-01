@@ -10,17 +10,18 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 ### Introduction 
 ---
 
-* Niche: An envelope of abiotic and biotic factors suitable to the survival of a species
-* SDMs: Associates presence locations to environmental variables, ideally an estimate of fundamental niche
-* Workflow: `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolation across time`
+* `Fundamental niche:` The entire envelope of abiotic and biotic factors suitable to the survival of a species
+* `Species Distribution Models (SDMs):` Associates presence locations to environmental variables, an estimate of fundamental niche
+* `Symbiotic species:` A close and long-term biological interaction between two species, e.g. the Desert Night Lizard (*X. vigilis*) is often reliant on Joshua Trees (*Y. brevifolia*) for shelter
+* `Workflow:` Data pre-processing -> Model fitting -> Assessment -> Baseline interpolation (1970-2000) -> Extrapolation across 21st century
 
-**Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?*** An ensemble of Species Distribution Models were extrapolated across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade time periods. Across these conditions, we predicted similar decline in suitable habitat for *X. vigilis* (51% to 9.3% of baseline) and *Y. brevifolia* (48% to 8.6% of baseline), considering areas where at least five GCMs overlapped, assuming negligible species dispersal (area intersection / baseline).
+**Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?*** An ensemble of Species Distribution Models were extrapolated to unseen data, forecasts of future climate, across eight Global Climate Models, four shared socioeconomic pathways, and three bi-decade time periods. Across these conditions, we predicted equal magnitude in habitat constriction for the two study species (49% to 90.7% Night Lizard decline from baseline; 52% to 91.4% Joshua Tree decline from baseline). For the mean in the below figure, we consider raster pixels where at least five/eight GCMs were in agreement per scenario, assuming negligible species dispersal from the baseline distribution (area of intersection / area of baseline).
 
 <p align="center"><img src="data/ensemble_extrapolation.png" width = 630/>
 
-**Question 2: *How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?*** We minimized modelling error by using a soft voting ensemble of well-fit classifiers, as well as by benchmarking climatic change between interpolation and extrapolation data, with Jaccard Similarity among principal components. Over the above forecasts, we predicted constricting spatial overlap between the species (~56% decrease from baseline climate, on average), which worsened across time. 
+**Question 2: *How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?*** We minimized modelling error by using a soft voting ensemble of well-fit classifiers, as well as by benchmarking climatic change between interpolation and extrapolation data, with Jaccard Similarity among principal components. While the magnitude of future habitat decline was roughly equivalent for the two species(as per above), the distributions were predicted to diverge, with declining overlap between the two species across the 21st century (~56% decrease from current conditions, on average). By 2090, spatial overlap between the two distributions may decrease by as much as ~87% of current conditions. 
 
-**Conclusion:** Our results reveal the importance of symbiotic species relationships in Species Distribution Models of climate change effects. We hypothesize that habitat degradation will be heightened for areas with both severe change in climate and environmental catastrophe, such as strong wildfire. We next strive to identify the areas most overlapped across time, primarily so to target ecological conservation for local species populations.  
+**Conclusion:** Our results reveal the importance of symbiotic species relationships in Species Distribution Models to more confidently pinpoint suitable areas for conservation, helping to protect the study area's deserts in the face of climate change. We hypothesize that habitat degradation will be heightened for areas with severe change in climate paired with environmental catastrophe, such as strong wildfire.
 
 ### Programming Workflow
 
