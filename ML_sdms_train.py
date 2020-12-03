@@ -22,11 +22,13 @@ from pycaret.classification import blend_models
 from pycaret.classification import compare_models
 from pandas import read_csv
 
-data = read_csv('data/envtrain_xv.csv')
+#data = read_csv('data/envtrain_xv.csv')
+data = read_csv('data_2.0/envtrain_xv.csv')
+
 #data = data.drop(['Unnamed: 0'], axis=1)
-exp_clf = setup(data, target='pa', session_id = 101, log_experiment = True,
-                experiment_name = 'xantusia_after')
-                #numeric_features = ['bclim14']) 
+exp_clf = setup(data, target='pa', log_experiment = True,
+                experiment_name = 'xv-21', session_id = 110,
+                numeric_features = ['bclim14'])
 
 # create models
 etrees = create_model('et')
@@ -55,10 +57,10 @@ save_model(lgbm, 'classifier_models(pkl)/xant_lgbm')
 finalize_model(log)
 save_model(log, 'classifier_models(pkl)/xant_log')
 
-#blender_specific = blend_models(estimator_list=[
-    #rf, etrees, xgboost, lgbm, catboost], method='soft')
 blender_specific = blend_models(estimator_list=[
-    etrees, lgbm, catboost], method='soft')
+    etrees, lgbm, rf], method='soft')
+#blender_specific = blend_models(estimator_list=[
+    #etrees, lgbm, catboost], method='soft')
 
 
 finalize_model(blender_specific)
