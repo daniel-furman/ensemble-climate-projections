@@ -38,4 +38,5 @@ The input data is located in the `data/` folder. Climate information was stored 
 ### Conclusion:
 
 ---
+
 Our results reveal the importance of symbiotic species relationships for SDMs, so to more confidently select areas within predictions of truly suitable habitat. We hypothesize that habitat degradation for our two study species will be heightened where severely changing climate is paired with environmental catastrophe, such as strong wildfire. We then pinpointed areas across the region to target conservation for the two species.
