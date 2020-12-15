@@ -9,8 +9,7 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 ### Discussion 
 ---
 
-
-A blend of tree-based, machine learning classifiers performed best at predicting the current geographic ranges for Xant. and Ybrev. The overlap in baseline geographic range was roughly fifty percent; thus, Xant. often survive in microhabitats other than fallen Joshua tree branches. Substantial bioclimatic change is predicted to constrict the geographic ranges for both species (Fig. 6), as well as reduce species overlap by ~56% from baseline conditions, on average. Lastly, we pinpointed areas with a high likelihood of retaining the two species future distributions, to target ecological conservation.
+A blend of tree-based, machine learning classifiers performed best at predicting the current geographic ranges for Xant. and Ybrev. The overlap in baseline geographic range was roughly fifty percent (intersection/union). Substantial bioclimatic change is predicted to constrict the geographic ranges for both species (Fig. 6), as well as reduce species overlap by ~56% from baseline conditions, on average. Areas with a high likelihood of future species overlap were then pinpointed, to target ecological conservation for Mojave Desert populations of Xant. reliant on fallen Joshua trees for shelter.
 
 
 
