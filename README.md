@@ -1,30 +1,24 @@
-## Assessing Climate Change Impacts on a Pair of Symbiotic Species with Ensemble Species Distribution Models
+## Assessing Climate Change Impacts on Xantusia vigilis lizards and their Joshua tree habitats with Ensemble Species Distribution Models
 
-
-*What underlying uncertainties are contained in geospatial climate change forecasts? How can models of climate change effects on geographic distributions incorporate symbiotic species relationships?*
+*How well do a variety of species distribution models (SDMs) perform for current geographic ranges of the two species? How much will climate change constrict the two species’ distributions, as well as their overlap. What can we kearn about jointly projecting SDMs of climate change impacts on these and other symbiotic species.*
 
 ---
 
 See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/file/d/114wmqQgjkc5DHLQmVI19AvlTw4K_daYQ/view?usp=sharing) conferences. Spatial classification was powered by the pyimpute library, see my open-source [contributions](https://github.com/perrygeo/pyimpute/pull/21) therein. Also see my corresponding <a target="_blank" rel="noopener noreferrer" href="https://daniel-furman.github.io/py-sdms-tutorial/"> tutorial</a> on predicting geospatial distributions with machine learning models in Python.
 
-### Introduction 
+### Discussion 
 ---
 
-* `Fundamental niche:` The entire envelope of abiotic and biotic factors suitable to the survival of a species
-* `Species Distribution Models (SDMs):` Associates presence locations to environmental variables, an estimate of fundamental niche
-* `Symbiotic species:` A close and long-term biological interaction between two species, e.g. the Desert Night Lizard (*X. vigilis*) is often reliant on Joshua Trees (*Y. brevifolia*) for shelter
-* `Workflow:` Data pre-processing -> Model fitting -> Assessment -> Baseline interpolation (1970-2000) -> Extrapolation across 21st century
 
-**Question 1: *What underlying uncertainties are contained in geospatial climate change forecasts?***  An ensemble of SDMs were extrapolated to unseen data, across eight Global Climate Models (GCMs), four shared socioeconomic pathways, and three bi-decade time periods. Across these forecasts, we predicted roughly equal magnitudes of habitat degradation for the study species (49% to 90.7% Night Lizard decline from baseline; 52% to 91.4% Joshua Tree decline from baseline). We explored uncertainty in these projections through spatial overlap among the eight GCMs, assuming negligible species dispersal.
-
-
-**Question 2: *How can models of climate change effects on geographic distributions best incorporate symbiotic species relationships?*** We first benchmarked climatic change between interpolation and extrapolation data, with Jaccard Similarity among principal components. With the models thus benchmarked, we help confirm our measurements of habitat decline (see above). Furthermore, we predicted the species distributions as spatially diverging across the 21st century, with substantial decline in the pair’s overlap (~56% decrease from baseline climate, on average). By 2090, geographic overlap between the two species may decrease by as much as ~87% from current conditions. 
+A blend of tree-based, machine learning classifiers performed best at predicting the current geographic ranges for Xant. and Ybrev. The overlap in baseline geographic range was roughly fifty percent; thus, Xant. often survive in microhabitats other than fallen Joshua tree branches. Substantial bioclimatic change is predicted to constrict the geographic ranges for both species (Fig. 6), as well as reduce species overlap by ~56% from baseline conditions, on average. Lastly, we pinpointed areas with a high likelihood of retaining the two species future distributions, to target ecological conservation.
 
 
 
 ### Programming Workflow
 
 ---
+
+* Data pre-processing -> Model fitting -> Assessment -> Baseline interpolation (1970-2000) -> Extrapolation across 21st century
 
 The `ML_sdms_.py` train and then validate ML classifiers. The `recursive-ranker.py` function recursively selected which features to use for the modeling, such that they were below a Spearman's threshold. We used the rank of feature importance scores to decide which variables to drop at each recursive call. These outputs are available in `Comparing_MLs.ipynb`, along with the geospatial predictions for the baseline and future climates. Lastly, `pca_benchmark.R` calculates the similarity between the model interpolation and extrapolation data using a Jacard similarity metric among principal components. 
 
