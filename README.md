@@ -1,6 +1,6 @@
-## Assessing Climate Change Impacts on Xantusia vigilis lizards and their Joshua tree habitats with Ensemble Species Distribution Models
+## Assessing Climate Change Impacts on *Xantusia vigilis* lizards and their Joshua tree habitats with Ensemble Species Distribution Models
 
-*How well do a variety of species distribution models (SDMs) perform for current geographic ranges of the two species? How much will climate change constrict the two species’ distributions, as well as their overlap. What can we kearn about jointly projecting SDMs of climate change impacts on these and other symbiotic species.*
+*How well do a variety of species distribution models (SDMs) perform for current geographic ranges of the two species? How much will climate change shift the spatial overlap between the two species’ distributions? What can we kearn about jointly projecting SDMs of climate change impacts on these and other symbiotic species?*
 
 ---
 
@@ -9,7 +9,9 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 ### Discussion 
 ---
 
-A blend of tree-based, machine learning classifiers performed best at predicting the current geographic ranges for Xant. and Ybrev. The overlap in baseline geographic range was roughly fifty percent (intersection/union). Substantial bioclimatic change is predicted to constrict the geographic ranges for both species, as well as reduce species overlap by ~56% from baseline conditions, on average. Areas with a high likelihood of future species overlap were then pinpointed, to target ecological conservation for Mojave Desert populations of Xant. reliant on fallen Joshua trees for shelter.
+Blends of tree-based machine learning classifiers performed best at predicting the geographic range for Xant. and Ybrev, a pair of iconic Mojave desert species. The spatial overlap between the two species’ near-current (1970-2000) distributions was ~fifty percent for overall intersection/union and ~x percent solely within Xant.’s geographic range. Across a multitude of future bioclimatic scenarios, we predicted severe constriction for both species' distributions (Fig. 6) and a significant reduction in their geographic overlap (down by ~56% from baseline conditions, on average). Equipped with these predictions across the 21st century, we pinpoint areas with a high likelihood of retaining Xant. and Ybrev overlap and suggest ways to target their ecological conservation.
+
+Our research can serve as a case study for projecting joint distributions of symbiotic species to explore ecological climate change affects. Habitat degradation for Mojave Desert species will likely result from changing climate and from discrete events of environmental catastrophe, such as wildfire and drought. Future inquiry will include an assessment of lag between Xant. and Ybrev. range shifts, movement in topography among predictions, and field work at Joshua tree strands recently burned by wildfire near the southern California/Arizona border.
 
 
 
