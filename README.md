@@ -1,6 +1,6 @@
 ## Assessing Climate Change Impacts on *Xantusia vigilis* lizards and their Joshua tree habitats with Ensemble Species Distribution Models
 
-*How well do a variety of species distribution models (SDMs) perform for current geographic ranges of the two species? How much will climate change shift the spatial overlap between the two species’ distributions? What can we kearn about jointly projecting SDMs of climate change impacts on these and other symbiotic species?*
+*How well do a variety of species distribution models (SDMs) predict Xant. and Ybrev. geographic ranges? How much will climate change shift spatial overlap between the two species’ distributions? What can we learn about jointly projecting SDMs of climate impacts on these and other symbiotic species?*
 
 ---
 
