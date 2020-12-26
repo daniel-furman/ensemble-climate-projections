@@ -10,7 +10,7 @@ See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.
 
 ---
 
-Figure 1/2: `ML_sdms_train.py`/ `ML_sdms_predict.py` <br><br>
+Figure 1/2: `ML_sdms_train.py`; `ML_sdms_predict.py`; `recursive-ranker.py` <br><br>
 Figure 3/4: `Comparing_MLs.ipynb` <br><br>
 Figure 5: `pca_benchmark.R` <br><br>
 Figure 6: `preprocessing_geodata.R` <br><br>
@@ -19,9 +19,10 @@ Figure 6: `preprocessing_geodata.R` <br><br>
 ### Introduction to study
 ---
 
-Blends of tree-based machine learning classifiers performed best at predicting the geographic range for *Xantusia vigilis* lizards and Yucca brevifolia, a pair of iconic Mojave desert species. The spatial overlap between the two species’ near-current (1970-2000) distributions was ~fifty percent overall (intersection/union) and ~sixty-five percent solely within Xantusia’s geographic range. Across future bioclimatic scenarios, we predicted severe constriction for both species' distributions (Fig. 6) and a significant reduction in their geographic overlap (down by ~56% from baseline conditions, on average). Equipped with these 21st century predictions, we pinpoint areas with a high likelihood of retaining Xantusia and Yucca overlap and suggest ways to target their ecological conservation. 
+Blends of tree-based machine learning classifiers performed best at predicting the geographic range for *Xantusia vigilis* and *Yucca brevifolia*, a pair of iconic Mojave desert species. The spatial overlap between the two species’ near-current (1970-2000) distributions was ~fifty percent overall (intersection/union) and ~sixty-five percent solely within Xantusia’s geographic range. Across future bioclimatic scenarios, we predicted severe constriction for both species' distributions (Fig. 6) and a significant reduction in their geographic overlap (down by ~56% from baseline conditions, on average). Equipped with these 21st century predictions, we pinpoint areas with a high likelihood of retaining Xantusia and Yucca overlap and suggest ways to target their ecological conservation.
 
-Our research can serve as a case study for projecting joint distributions of symbiotic species to explore ecological climate change affects. Habitat degradation for Mojave Desert species will likely result from changing climate and from discrete events of environmental catastrophe, such as wildfire and drought. Future research will include an assessment of lag between Xantusia and Yucca range shifts, topographic analyses, and field work at recently burned Joshua tree strands near the southern California/Arizona border (see [NYT article](https://www.nytimes.com/interactive/2020/12/09/climate/redwood-sequoia-tree-fire.html?)).
+Our research can serve as a case study for projecting joint distributions of symbiotic species to explore ecological climate change affects. Habitat degradation for Mojave Desert species will likely result from changing climate and from discrete events of environmental catastrophe, such as wildfire and drought. Future research will include an assessment of lag between *Xantusia* and *Yucca* shifts, topographic analyses across the species’ geographic ranges, and field work at recently burned
+Joshua tree strands near the southern California/Arizona border (see [NYT article](https://www.nytimes.com/interactive/2020/12/09/climate/redwood-sequoia-tree-fire.html?)).
 
 
 
@@ -31,7 +32,7 @@ Our research can serve as a case study for projecting joint distributions of sym
 
 * `Data pre-processing` -> `Model fitting` -> `Assessment` -> `Baseline interpolation (1970-2000)` -> `Extrapolation across 21st century`
 
-The `ML_sdms_.py` train and then validate ML classifiers. The `recursive-ranker.py` function recursively selected which features to use for the modeling, such that they were below a Spearman's threshold. We used the rank of feature importance scores to decide which variables to drop at each recursive call. These outputs are available in `Comparing_MLs.ipynb`, along with the geospatial predictions for the baseline and future climates. Lastly, `pca_benchmark.R` calculates the similarity between the model interpolation and extrapolation data using a Jacard similarity metric among principal components. 
+The `ML_sdms_.py` train and validate ML classifiers. The `recursive-ranker.py` function recursively selected which features to use for the modeling, such that they were below a Spearman's threshold. We used the rank of feature importance scores to decide which variables to drop at each recursive call. These outputs are available in `Comparing_MLs.ipynb`, along with the geospatial predictions for the baseline and future climates. Lastly, `pca_benchmark.R` calculates the similarity between the model interpolation and extrapolation data using a Jacard similarity metric among principal components. 
 
 
 ### Data
