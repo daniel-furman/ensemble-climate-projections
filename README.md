@@ -1,6 +1,6 @@
 ## Assessing Climate Change Impacts on *Xantusia vigilis* lizards and their Joshua tree habitats with Ensemble Species Distribution Models
 
-*How well do species distribution models (SDMs) perform for Xantusia and Yucca on near-current (1970-2000) and projected (2041-2100) years? Will climate change decrease overlap between the two species’ distributions? What can we learn about jointly projecting SDMs of climate impacts on these and other symbiotic species?*
+*What can we learn about jointly projecting range models of symbiotic species to future climates? Will climate change decrease geographic overlap between two iconic Mojave species?*
 
 ---
 
