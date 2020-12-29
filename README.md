@@ -1,6 +1,6 @@
 ## Assessing Climate Change Impacts on *Xantusia vigilis* lizards and their Joshua tree habitats with Ensemble Species Distribution Models
 
-*What can we learn about jointly projecting range models of symbiotic species to future climates? Will climate change decrease geographic overlap between two iconic Mojave species?*
+*What can we learn about jointly projecting range models of symbiotic species to future climates? How will climate change impact geographic overlap between Mojave Desert species?*
 
 ---
 
