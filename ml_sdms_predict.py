@@ -33,17 +33,17 @@ warnings.filterwarnings("ignore")
 
 CLASS_MAP = {
     'Random Forest': ('-.', load_model('classifier_models(pkl)/xant_rf')[23]),
-    'Catboost': ('-.', load_model('classifier_models(pkl)/xant_cboost')[23]),
+    #'Catboost': ('-.', load_model('classifier_models(pkl)/xant_cboost')[23]),
     'LGBoost Machine': ('-.', load_model('classifier_models(pkl)/xant_lgbm')[23]),
     'Extra Trees': ('-.', load_model('classifier_models(pkl)/xant_etrees')[23]),
-    'XGBoost': ('-.', load_model('classifier_models(pkl)/xant_xgb')[23]),
-    'Logistic Regression': ('-.', load_model('classifier_models(pkl)/xant_log')[23]),
+    #'XGBoost': ('-.', load_model('classifier_models(pkl)/xant_xgb')[23]),
+    #'Logistic Regression': ('-.', load_model('classifier_models(pkl)/xant_log')[23]),
     'Blend (rf, et, lgbm)': ('-', load_model('classifier_models(pkl)/xant_blended')[23])
     }
 
 # load training (80%) and test (20%) sets
 
-env_data = pd.read_csv('data_2.0/envtrain_xv.csv')
+env_data = pd.read_csv('data_2.0/envtrain_xv_test.csv')
 training_class = env_data['pa']
 training_data = env_data.drop(['pa'], axis=1)
 
