@@ -4,7 +4,14 @@
 
 ---
 
-**Computational ecology research for conservation in the Mojave and beyond.** See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). All code and data required to reproduce research presented at the [SICB 2021](https://sicbannualmeeting.pathable.co/meetings/virtual/b5bEwkdpSNA3kaCLq) and [SCCUR 2019](https://drive.google.com/file/d/114wmqQgjkc5DHLQmVI19AvlTw4K_daYQ/view?usp=sharing) conferences. Spatial classification was powered by the pyimpute library, see my open-source [contributions](https://github.com/perrygeo/pyimpute/pull/21) therein. Also see my corresponding <a target="_blank" rel="noopener noreferrer" href="https://daniel-furman.github.io/py-sdms-tutorial/"> tutorial</a> on predicting geospatial distributions with machine learning models in Python.
+Computational ecology research for conservation in the Mojave and beyond.
+
+Recovered posteriors with one and two <img src="https://render.githubusercontent.com/render/math?math=\sigma"> errors | Decay model with <img src="https://render.githubusercontent.com/render/math?math=\lambda"> prior
+:-------------------------------------------:|:------------------------------:
+![](examples/data/corners.png) | ![](examples/data/scatter.png)
+
+
+See the online notebook first: [`Comparing_MLs.ipynb`](https://nbviewer.jupyter.org/github/daniel-furman/ensemble-climate-projections/blob/main/Comparing_MLs.ipynb). All code and data required to reproduce research presented at the [SICB 2021](https://sicbannualmeeting.pathable.co/meetings/virtual/b5bEwkdpSNA3kaCLq) and [SCCUR 2019](https://drive.google.com/file/d/114wmqQgjkc5DHLQmVI19AvlTw4K_daYQ/view?usp=sharing) conferences. Spatial classification was powered by the pyimpute library, see my open-source [contributions](https://github.com/perrygeo/pyimpute/pull/21) therein. Also see my corresponding <a target="_blank" rel="noopener noreferrer" href="https://daniel-furman.github.io/py-sdms-tutorial/"> tutorial</a> on predicting geospatial distributions with machine learning models in Python.
 
 **SICB conference citation:** DR Furman, SK Halvorsen, and SC Adolph. Assessing Climate Change Impacts … with Ensemble Species Distribution Models. *Society for Integrative and Comparative Biology*, 2021.
 
