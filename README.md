@@ -11,9 +11,9 @@ Desert Night Lizard distribution| Validation-set AUC statistics
 ![](data/range.png) | ![](data/auc.png)
 
 
-All code and data required to reproduce research presented at the [SICB 2021](https://sicbannualmeeting.pathable.co/meetings/virtual/b5bEwkdpSNA3kaCLq) and [SCCUR 2019](https://drive.google.com/file/d/114wmqQgjkc5DHLQmVI19AvlTw4K_daYQ/view?usp=sharing) conferences. Computational ecology research driving effective biodiversity conservation in the Mojave Desert. Conference Publication: (1) DR Furman et al., Society for Integrative and Comparative Biology Meeting, Jan. 3, 2021.; Talk: (2) DR Furman and SK Halvorsen, SCCUR Meeting, Nov. 23, 2019.
+All code and data required to reproduce research presented at the SICB 2021 and [SCCUR 2019](https://drive.google.com/file/d/114wmqQgjkc5DHLQmVI19AvlTw4K_daYQ/view?usp=sharing) conferences. Computational ecology research driving effective biodiversity conservation in the Mojave Desert. Conference Publication: (1) DR Furman et al., Society for Integrative and Comparative Biology Meeting, Jan. 3, 2021.; Talk: (2) DR Furman and SK Halvorsen, SCCUR Meeting, Nov. 23, 2019.
 
-### [SICB '21](https://sicbannualmeeting.pathable.co/meetings/virtual/b5bEwkdpSNA3kaCLq) Figures
+### SICB '21 Figures
 
 ---
 
